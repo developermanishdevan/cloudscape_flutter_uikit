@@ -15,4 +15,4 @@ export 'src/foundation/theme/cloudscape_theme_controller.dart';
 export 'src/foundation/accessibility/accessibility_utils.dart';
 
 // Components
-export 'src/components/base/cloudscape_components_base.dart';
+export 'src/components/base/component_base.dart';

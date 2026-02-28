@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 /// A function type that returns a widget given a hover state.
-typedef CloudscapeComponentsBaseBuilder =
+typedef ComponentsBaseBuilder =
     Widget Function(BuildContext context, bool isHovered);
 
 /// A base wrapper widget for Cloudscape components.
@@ -11,12 +11,12 @@ typedef CloudscapeComponentsBaseBuilder =
 /// - Mouse interactions via [MouseRegion]
 /// - Platform-aware cursors
 /// - Hover state feedback
-class CloudscapeComponentsBase extends StatefulWidget {
+class ComponentsBase extends StatefulWidget {
   /// The child widget. If using [builder], this is ignored.
   final Widget? child;
 
   /// A builder function that provides the hover state.
-  final CloudscapeComponentsBaseBuilder? builder;
+  final ComponentsBaseBuilder? builder;
 
   /// Accessibility label for the component.
   final String? label;
@@ -45,7 +45,7 @@ class CloudscapeComponentsBase extends StatefulWidget {
   /// Whether this widget is currently selected/active.
   final bool? selected;
 
-  const CloudscapeComponentsBase({
+  const ComponentsBase({
     super.key,
     this.child,
     this.builder,
@@ -64,11 +64,10 @@ class CloudscapeComponentsBase extends StatefulWidget {
        );
 
   @override
-  State<CloudscapeComponentsBase> createState() =>
-      _CloudscapeComponentsBaseState();
+  State<ComponentsBase> createState() => _ComponentsBaseState();
 }
 
-class _CloudscapeComponentsBaseState extends State<CloudscapeComponentsBase> {
+class _ComponentsBaseState extends State<ComponentsBase> {
   bool _isHovered = false;
 
   @override
