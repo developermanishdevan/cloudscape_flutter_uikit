@@ -41,6 +41,7 @@ class CloudscapeCard extends StatelessWidget {
     final colors = context.cloudscapeColors;
     final spacing = context.cloudscapeSpacing;
     final rds = context.cloudscapeRadius;
+    final borderWidth = context.cloudscapeBorderWidth;
 
     final effectiveBorderRadius =
         borderRadius ?? BorderRadius.all(Radius.circular(rds.container));
@@ -58,7 +59,7 @@ class CloudscapeCard extends StatelessWidget {
               borderRadius: effectiveBorderRadius,
               border: Border.all(
                 color: colors.tokens.colorBorderDividerDefault,
-                width: 1,
+                width: borderWidth.container,
               ),
               boxShadow: isHovered && onTap != null
                   ? [

@@ -46,6 +46,13 @@ class CloudscapeTokens {
   static const double borderRadiusChatBubble = 8;
   static const double borderRadiusTutorialPanelItem = 8;
 
+  // --- BORDER WIDTH ---
+  static const double borderWidthAlert = 2;
+  static const double borderWidthButton = 2;
+  static const double borderWidthDropdown = 2;
+  static const double borderWidthField = 1;
+  static const double borderWidthContainer = 1;
+
   // --- TYPOGRAPHY ---
   static const double fontSizeBodyM = 14;
   static const double fontSizeBodyS = 12;

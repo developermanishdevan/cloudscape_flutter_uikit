@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../tokens/border_width.dart';
 import '../tokens/colors.dart';
 import '../tokens/motion.dart';
 import '../tokens/radius.dart';
@@ -12,6 +13,7 @@ class CloudscapeTheme {
     final typography = const CloudscapeTypography();
     final spacing = const CloudscapeSpacing();
     final radius = const CloudscapeRadius();
+    final borderWidth = const CloudscapeBorderWidth();
     final motion = const CloudscapeMotion();
 
     return ThemeData(
@@ -26,7 +28,7 @@ class CloudscapeTheme {
         onError: colors.tokens.colorTextStatusError,
       ),
       scaffoldBackgroundColor: colors.tokens.colorBackgroundLayoutMain,
-      extensions: [colors, typography, spacing, radius, motion],
+      extensions: [colors, typography, spacing, radius, borderWidth, motion],
     );
   }
 
@@ -35,6 +37,7 @@ class CloudscapeTheme {
     final typography = const CloudscapeTypography();
     final spacing = const CloudscapeSpacing();
     final radius = const CloudscapeRadius();
+    final borderWidth = const CloudscapeBorderWidth();
     final motion = const CloudscapeMotion();
 
     return ThemeData(
@@ -49,7 +52,7 @@ class CloudscapeTheme {
         onError: colors.tokens.colorTextStatusError,
       ),
       scaffoldBackgroundColor: colors.tokens.colorBackgroundLayoutMain,
-      extensions: [colors, typography, spacing, radius, motion],
+      extensions: [colors, typography, spacing, radius, borderWidth, motion],
     );
   }
 }
@@ -63,6 +66,8 @@ extension CloudscapeThemeContext on BuildContext {
       Theme.of(this).extension<CloudscapeSpacing>()!;
   CloudscapeRadius get cloudscapeRadius =>
       Theme.of(this).extension<CloudscapeRadius>()!;
+  CloudscapeBorderWidth get cloudscapeBorderWidth =>
+      Theme.of(this).extension<CloudscapeBorderWidth>()!;
   CloudscapeMotion get cloudscapeMotion =>
       Theme.of(this).extension<CloudscapeMotion>()!;
 }

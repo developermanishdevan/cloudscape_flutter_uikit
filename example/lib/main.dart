@@ -85,18 +85,43 @@ class ThemeControllerWrapper extends StatelessWidget {
   }
 }
 
-class UiKitExample extends StatelessWidget {
+class UiKitExample extends StatefulWidget {
   const UiKitExample({super.key});
+
+  @override
+  State<UiKitExample> createState() => _UiKitExampleState();
+}
+
+class _UiKitExampleState extends State<UiKitExample> {
+  // Configurable Alert State
+  bool _configVisible = true;
+  bool _configDismissible = false;
+
+  // Handlers
+  void _resetConfig() {
+    setState(() {
+      _configVisible = true;
+      _configDismissible = false;
+    });
+  }
+
+  void _hideAlert() {
+    setState(() {
+      _configVisible = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final typography = context.cloudscapeTypography;
     final spacing = context.cloudscapeSpacing;
+    final colors = context.cloudscapeColors;
+    final radius = context.cloudscapeRadius;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Cloudscape Typography Showcase',
+          'Cloudscape Components Example',
           style: typography.displayNormal,
         ),
         backgroundColor: Colors.transparent,
@@ -108,8 +133,179 @@ class UiKitExample extends StatelessWidget {
           spacing: spacing.scaledM,
           runSpacing: spacing.scaledM,
           children: [
+            // Alert Component Card
             SizedBox(
-              width: 700,
+              width: 600,
+              child: CloudscapeCard(
+                header: Container(
+                  height: 50,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: spacing.scaledM),
+                  child: Text('Alert', style: typography.headingL),
+                ),
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Info', style: typography.headingS),
+                    SizedBox(height: spacing.scaledXxs),
+                    CloudscapeAlert(
+                      type: AlertType.info,
+                      header: const Text('Information'),
+                      child: const Text(
+                        'A message that provides context for the user without requiring them to act.',
+                      ),
+                    ),
+                    SizedBox(height: spacing.scaledM),
+
+                    Text('Success', style: typography.headingS),
+                    SizedBox(height: spacing.scaledXxs),
+                    CloudscapeAlert(
+                      type: AlertType.success,
+                      header: const Text('Success'),
+                      child: const Text(
+                        'Your action was completed successfully.',
+                      ),
+                    ),
+                    SizedBox(height: spacing.scaledM),
+
+                    Text('Warning', style: typography.headingS),
+                    SizedBox(height: spacing.scaledXxs),
+                    CloudscapeAlert(
+                      type: AlertType.warning,
+                      header: const Text('Warning'),
+                      child: const Text(
+                        'Please be careful before proceeding with this action.',
+                      ),
+                    ),
+                    SizedBox(height: spacing.scaledM),
+
+                    Text('Error', style: typography.headingS),
+                    SizedBox(height: spacing.scaledXxs),
+                    CloudscapeAlert(
+                      type: AlertType.error,
+                      header: const Text('Error'),
+                      child: const Text(
+                        'An error occurred while processing your request.',
+                      ),
+                    ),
+                    SizedBox(height: spacing.scaledM),
+
+                    Text('With button', style: typography.headingS),
+                    SizedBox(height: spacing.scaledXxs),
+                    CloudscapeAlert(
+                      type: AlertType.info,
+                      header: const Text('Updates available'),
+                      action: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              colors.tokens.colorBackgroundButtonPrimaryDefault,
+                          foregroundColor:
+                              colors.tokens.colorTextButtonPrimaryDefault,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(radius.button),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: const Text('View updates'),
+                      ),
+                      child: const Text(
+                        'There is a new version available for download.',
+                      ),
+                    ),
+                    SizedBox(height: spacing.scaledXl),
+
+                    const Divider(),
+                    SizedBox(height: spacing.scaledM),
+
+                    // Configuration Section
+                    Text('Configuration', style: typography.headingM),
+                    SizedBox(height: spacing.scaledM),
+
+                    Container(
+                      padding: EdgeInsets.all(spacing.scaledS),
+                      decoration: BoxDecoration(
+                        color: colors.tokens.colorBackgroundContainerContent,
+                        border: Border.all(
+                          color: colors.tokens.colorBorderItemFocused,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CloudscapeAlert(
+                            type: AlertType.info,
+                            header: const Text('Configurable alert'),
+                            visible: _configVisible,
+                            dismissible: _configDismissible,
+                            onDismiss: _hideAlert,
+                            child: const Text(
+                              'Configure properties to see them applied to this alert.',
+                            ),
+                          ),
+                          SizedBox(height: spacing.scaledM),
+                          Text('Properties', style: typography.headingS),
+                          SizedBox(height: spacing.scaledXs),
+                          Row(
+                            children: [
+                              Text('dismissible', style: typography.bodyM),
+                              Switch(
+                                value: _configDismissible,
+                                onChanged: (val) {
+                                  setState(() {
+                                    _configDismissible = val;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text('visible', style: typography.bodyM),
+                              Switch(
+                                value: _configVisible,
+                                onChanged: (val) {
+                                  setState(() {
+                                    _configVisible = val;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: spacing.scaledM),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: OutlinedButton(
+                              onPressed: _resetConfig,
+                              style: OutlinedButton.styleFrom(
+                                side: BorderSide(
+                                  color: colors
+                                      .tokens
+                                      .colorBorderButtonNormalDefault,
+                                ),
+                                foregroundColor:
+                                    colors.tokens.colorTextButtonNormalDefault,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    radius.button,
+                                  ),
+                                ),
+                              ),
+                              child: const Text('Reset'),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Typography Section
+            SizedBox(
+              width: 500,
               child: CloudscapeCard(
                 header: Container(
                   height: 50,
@@ -154,6 +350,7 @@ class UiKitExample extends StatelessWidget {
                     const Divider(height: 32),
                     _ShowcaseItem(label: 'bodyM', style: typography.bodyM),
                     _ShowcaseItem(label: 'bodyS', style: typography.bodyS),
+                    _ShowcaseItem(label: 'label', style: typography.label),
                     const Divider(height: 32),
                     _ShowcaseItem(label: 'code', style: typography.code),
                     _ShowcaseItem(label: 'codeS', style: typography.codeS),
