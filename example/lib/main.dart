@@ -97,6 +97,9 @@ class _UiKitExampleState extends State<UiKitExample> {
   bool _configVisible = true;
   bool _configDismissible = false;
 
+  // Anchor Navigation State
+  String _activeAnchor = '#section-1.1';
+
   // Handlers
   void _resetConfig() {
     setState(() {
@@ -300,6 +303,151 @@ class _UiKitExampleState extends State<UiKitExample> {
                     ),
                   ],
                 ),
+              ),
+            ),
+
+            // Anchor Navigation Section - Variations
+            SizedBox(
+              width: 500,
+              child: Column(
+                children: [
+                  // Variant 1: Default
+                  CloudscapeCard(
+                    header: Container(
+                      height: 50,
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: spacing.scaledM,
+                      ),
+                      child: Text(
+                        'Anchor Navigation (Default)',
+                        style: typography.headingL,
+                      ),
+                    ),
+                    body: CloudscapeAnchorNavigation(
+                      activeTargetId: _activeAnchor,
+                      onFollow: (anchor) {
+                        setState(() => _activeAnchor = anchor.targetId);
+                      },
+                      anchors: const [
+                        AnchorNavigationItem(
+                          text: 'Section 1',
+                          targetId: 'section-1',
+                        ),
+                        AnchorNavigationItem(
+                          text: 'Section 2',
+                          targetId: 'section-2',
+                        ),
+                        AnchorNavigationItem(
+                          text: 'Section 3',
+                          targetId: 'section-3',
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: spacing.scaledM),
+
+                  // Variant 2: With heading
+                  CloudscapeCard(
+                    header: Container(
+                      height: 50,
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: spacing.scaledM,
+                      ),
+                      child: Text('With heading', style: typography.headingL),
+                    ),
+                    body: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Page contents', style: typography.headingS),
+                        const SizedBox(height: 8),
+                        CloudscapeAnchorNavigation(
+                          activeTargetId: _activeAnchor,
+                          ariaLabelledby: 'Page contents',
+                          onFollow: (anchor) =>
+                              setState(() => _activeAnchor = anchor.targetId),
+                          anchors: const [
+                            AnchorNavigationItem(
+                              text: 'Section 1',
+                              targetId: 'section-1',
+                            ),
+                            AnchorNavigationItem(
+                              text: 'Section 2',
+                              targetId: 'section-2',
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: spacing.scaledM),
+
+                  // Variant 3: With nested anchors & Status Labels
+                  CloudscapeCard(
+                    header: Container(
+                      height: 50,
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: spacing.scaledM,
+                      ),
+                      child: Text(
+                        'With nested anchors & labels',
+                        style: typography.headingL,
+                      ),
+                    ),
+                    body: CloudscapeAnchorNavigation(
+                      activeTargetId: _activeAnchor,
+                      onFollow: (anchor) {
+                        setState(() => _activeAnchor = anchor.targetId);
+                      },
+                      anchors: const [
+                        AnchorNavigationItem(
+                          text: 'Section 1',
+                          targetId: 'section-1',
+                          level: 1,
+                        ),
+                        AnchorNavigationItem(
+                          text: 'Section 1.1',
+                          targetId: 'section-1.1',
+                          level: 2,
+                        ),
+                        AnchorNavigationItem(
+                          text: 'Section 1.2',
+                          targetId: 'section-1.2',
+                          level: 2,
+                          info: 'New',
+                        ),
+                        AnchorNavigationItem(
+                          text: 'Section 2',
+                          targetId: 'section-2',
+                          level: 1,
+                        ),
+                        AnchorNavigationItem(
+                          text: 'Section 2.1',
+                          targetId: 'section-2.1',
+                          level: 2,
+                        ),
+                        AnchorNavigationItem(
+                          text: 'Section 2.2',
+                          targetId: 'section-2.2',
+                          level: 2,
+                        ),
+                        AnchorNavigationItem(
+                          text: 'Section 2.2.1',
+                          targetId: 'section-2.2.1',
+                          level: 3,
+                        ),
+                        AnchorNavigationItem(
+                          text: 'Section 3',
+                          targetId: 'section-3',
+                          level: 1,
+                          info: 'Updated',
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
 
