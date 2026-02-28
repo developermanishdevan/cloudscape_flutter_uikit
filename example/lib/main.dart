@@ -99,8 +99,43 @@ class _UiKitExampleState extends State<UiKitExample> {
 
   // Anchor Navigation State
   String _activeAnchor = '#section-1.1';
-  bool _group1Expanded = true;
-  bool _group2Expanded = false;
+
+  // Side Navigation State
+  String _activeSideNav = 'alert';
+  final Set<String> _expandedGroups = {'board-components'};
+
+  final List<SideNavigationItem> _sideNavItems = [
+    const SideNavigationItem(text: 'Alert', targetId: 'alert'),
+    const SideNavigationItem(
+      text: 'Anchor navigation',
+      targetId: 'anchor-navigation',
+    ),
+    const SideNavigationItem(text: 'App layout', targetId: 'app-layout'),
+    const SideNavigationItem(
+      text: 'App layout toolbar',
+      targetId: 'app-layout-toolbar',
+    ),
+    const SideNavigationItem(
+      text: 'Attribute editor',
+      targetId: 'attribute-editor',
+    ),
+    const SideNavigationItem(text: 'Autosuggest', targetId: 'autosuggest'),
+    const SideNavigationItem(text: 'Badge', targetId: 'badge'),
+    const SideNavigationItem(
+      text: 'Board components',
+      targetId: 'board-components',
+      items: [
+        SideNavigationItem(text: 'Board', targetId: 'board'),
+        SideNavigationItem(text: 'Board item', targetId: 'board-item'),
+        SideNavigationItem(text: 'Items palette', targetId: 'items-palette'),
+      ],
+    ),
+    const SideNavigationItem(text: 'Box', targetId: 'box'),
+    const SideNavigationItem(
+      text: 'Breadcrumb group',
+      targetId: 'breadcrumb-group',
+    ),
+  ];
 
   // Handlers
   void _resetConfig() {
@@ -451,7 +486,7 @@ class _UiKitExampleState extends State<UiKitExample> {
                   ),
                   SizedBox(height: spacing.scaledM),
 
-                  // Variant 4: With Expandable Section & Without Grey Line
+                  // Side Navigation Showcase
                   CloudscapeBox(
                     header: Container(
                       height: 50,
@@ -460,52 +495,39 @@ class _UiKitExampleState extends State<UiKitExample> {
                         horizontal: spacing.scaledM,
                       ),
                       child: Text(
-                        'With expandable section (no track)',
+                        'Side Navigation',
                         style: typography.headingL,
                       ),
                     ),
-                    body: CloudscapeAnchorNavigation(
-                      activeTargetId: _activeAnchor,
-                      showTrack: false,
-                      onFollow: (anchor) {
-                        setState(() {
-                          _activeAnchor = anchor.targetId;
-                          if (anchor.targetId == 'group-1') {
-                            _group1Expanded = !_group1Expanded;
-                          } else if (anchor.targetId == 'group-2') {
-                            _group2Expanded = !_group2Expanded;
-                          }
-                        });
-                      },
-                      anchors: [
-                        AnchorNavigationItem(
-                          text: 'Expandable Group 1',
-                          targetId: 'group-1',
-                          level: 1,
-                          expanded: _group1Expanded,
-                        ),
-                        const AnchorNavigationItem(
-                          text: 'Nested Section 1.1',
-                          targetId: 'nested-1.1',
-                          level: 2,
-                        ),
-                        const AnchorNavigationItem(
-                          text: 'Nested Section 1.2',
-                          targetId: 'nested-1.2',
-                          level: 2,
-                        ),
-                        AnchorNavigationItem(
-                          text: 'Expandable Group 2',
-                          targetId: 'group-2',
-                          level: 1,
-                          expanded: _group2Expanded,
-                        ),
-                        const AnchorNavigationItem(
-                          text: 'Nested Section 2.1',
-                          targetId: 'nested-2.1',
-                          level: 2,
-                        ),
-                      ],
+                    body: SizedBox(
+                      width: 250,
+                      child: CloudscapeSideNavigation(
+                        activeTargetId: _activeSideNav,
+                        items: _sideNavItems
+                            .map(
+                              (item) => SideNavigationItem(
+                                text: item.text,
+                                targetId: item.targetId,
+                                expanded: _expandedGroups.contains(
+                                  item.targetId,
+                                ),
+                                items: item.items,
+                              ),
+                            )
+                            .toList(),
+                        onFollow: (item) {
+                          setState(() => _activeSideNav = item.targetId);
+                        },
+                        onExpandToggle: (item) {
+                          setState(() {
+                            if (_expandedGroups.contains(item.targetId)) {
+                              _expandedGroups.remove(item.targetId);
+                            } else {
+                              _expandedGroups.add(item.targetId);
+                            }
+                          });
+                        },
+                      ),
                     ),
                   ),
                 ],

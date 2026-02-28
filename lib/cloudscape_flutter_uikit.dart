@@ -20,3 +20,4 @@ export 'src/components/base/component_base.dart';
 export 'src/components/box/cloudscape_box.dart';
 export 'src/components/alert/cloudscape_alert.dart';
 export 'src/components/anchor_navigation/cloudscape_anchor_navigation.dart';
+export 'src/components/side_navigation/cloudscape_side_navigation.dart';
