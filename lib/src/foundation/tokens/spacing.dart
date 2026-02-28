@@ -1,39 +1,45 @@
-/// Spacing tokens for consistent rhythm and clarity.
-class CloudscapeSpacing {
-  /// 2 pixels
-  static const double xxxSmall = 2;
+import 'package:flutter/material.dart';
 
-  /// 4 pixels
-  static const double xxSmall = 4;
+import 'generated/cloudscape_tokens.dart';
 
-  /// 8 pixels
-  static const double xSmall = 8;
+class CloudscapeSpacing extends ThemeExtension<CloudscapeSpacing> {
+  const CloudscapeSpacing();
 
-  /// 12 pixels
-  static const double small = 12;
+  // Margins & Paddings
+  double get containerHorizontal => CloudscapeTokens.spaceContainerHorizontal;
+  double get fieldHorizontal => CloudscapeTokens.spaceFieldHorizontal;
+  double get treeViewIndentation => CloudscapeTokens.spaceTreeViewIndentation;
 
-  /// 16 pixels
-  static const double medium = 16;
+  // Scaled SPACING
+  double get scaledXxxs => CloudscapeTokens.spaceScaledXxxs;
+  double get scaledXxs => CloudscapeTokens.spaceScaledXxs;
+  double get scaledXs => CloudscapeTokens.spaceScaledXs;
+  double get scaledS => CloudscapeTokens.spaceScaledS;
+  double get scaledM => CloudscapeTokens.spaceScaledM;
+  double get scaledL => CloudscapeTokens.spaceScaledL;
+  double get scaledXl => CloudscapeTokens.spaceScaledXl;
+  double get scaledXxl => CloudscapeTokens.spaceScaledXxl;
+  double get scaledXxxl => CloudscapeTokens.spaceScaledXxxl;
 
-  /// 20 pixels
-  static const double large = 20;
+  // Static SPACING
+  double get staticXxxs => CloudscapeTokens.spaceStaticXxxs;
+  double get staticXxs => CloudscapeTokens.spaceStaticXxs;
+  double get staticXs => CloudscapeTokens.spaceStaticXs;
+  double get staticS => CloudscapeTokens.spaceStaticS;
+  double get staticM => CloudscapeTokens.spaceStaticM;
+  double get staticL => CloudscapeTokens.spaceStaticL;
+  double get staticXl => CloudscapeTokens.spaceStaticXl;
+  double get staticXxl => CloudscapeTokens.spaceStaticXxl;
+  double get staticXxxl => CloudscapeTokens.spaceStaticXxxl;
 
-  /// 24 pixels
-  static const double xLarge = 24;
+  @override
+  ThemeExtension<CloudscapeSpacing> copyWith() => const CloudscapeSpacing();
 
-  /// 32 pixels
-  static const double xxLarge = 32;
-
-  /// 40 pixels
-  static const double xxxLarge = 40;
-
-  /// Standard spacing scale used by Cloudscape components.
-  static const Map<String, double> scale = {
-    'xs': xxxSmall,
-    's': xxSmall,
-    'm': xSmall,
-    'l': small,
-    'xl': medium,
-    'xxl': large,
-  };
+  @override
+  ThemeExtension<CloudscapeSpacing> lerp(
+    ThemeExtension<CloudscapeSpacing>? other,
+    double t,
+  ) {
+    return this;
+  }
 }

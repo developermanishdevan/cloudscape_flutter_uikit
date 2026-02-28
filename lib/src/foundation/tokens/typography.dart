@@ -1,60 +1,96 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Typography definitions for Cloudscape Design System.
-class CloudscapeTypography {
-  static final TextStyle _base = GoogleFonts.openSans();
-  static final TextStyle _mono = GoogleFonts.sourceCodePro();
+import 'generated/cloudscape_tokens.dart';
 
-  // Font Weights
-  static const FontWeight weightLight = FontWeight.w300;
-  static const FontWeight weightNormal = FontWeight.w400;
-  static const FontWeight weightMedium = FontWeight.w600;
-  static const FontWeight weightBold = FontWeight.w700;
-  static const FontWeight weightHeavy = FontWeight.w800;
+class CloudscapeTypography extends ThemeExtension<CloudscapeTypography> {
+  const CloudscapeTypography();
 
-  // Type Styles
-  static final TextStyle headingXL = _base.copyWith(
-    fontSize: 24,
-    height: 30 / 24,
-    fontWeight: weightBold,
+  TextStyle _createStyle(
+    double fontSize,
+    double lineHeight, [
+    FontWeight? fontWeight,
+  ]) {
+    return GoogleFonts.openSans(
+      fontSize: fontSize,
+      fontWeight: fontWeight ?? FontWeight.normal,
+      height: lineHeight / fontSize,
+    );
+  }
+
+  // Body styles
+  TextStyle get bodyM => _createStyle(
+    CloudscapeTokens.fontSizeBodyM,
+    CloudscapeTokens.lineHeightBodyM,
+  );
+  TextStyle get bodyS => _createStyle(
+    CloudscapeTokens.fontSizeBodyS,
+    CloudscapeTokens.lineHeightBodyS,
   );
 
-  static final TextStyle headingL = _base.copyWith(
-    fontSize: 20,
-    height: 24 / 20,
-    fontWeight: weightBold,
+  // Display styles
+  TextStyle get displayL => _createStyle(
+    CloudscapeTokens.fontSizeDisplayL,
+    CloudscapeTokens.lineHeightDisplayL,
+    FontWeight.w900,
   );
 
-  static final TextStyle headingM = _base.copyWith(
-    fontSize: 18,
-    height: 22 / 18,
-    fontWeight: weightBold,
+  // Heading styles
+  TextStyle get headingXl => _createStyle(
+    CloudscapeTokens.fontSizeHeadingXl,
+    CloudscapeTokens.lineHeightHeadingXl,
+    CloudscapeTokens.fontWeightHeadingXl,
+  );
+  TextStyle get headingL => _createStyle(
+    CloudscapeTokens.fontSizeHeadingL,
+    CloudscapeTokens.lineHeightHeadingL,
+    CloudscapeTokens.fontWeightHeadingL,
+  );
+  TextStyle get headingM => _createStyle(
+    CloudscapeTokens.fontSizeHeadingM,
+    CloudscapeTokens.lineHeightHeadingM,
+    CloudscapeTokens.fontWeightHeadingM,
+  );
+  TextStyle get headingS => _createStyle(
+    CloudscapeTokens.fontSizeHeadingS,
+    CloudscapeTokens.lineHeightHeadingS,
+    CloudscapeTokens.fontWeightHeadingS,
+  );
+  TextStyle get headingXs => _createStyle(
+    CloudscapeTokens.fontSizeHeadingXs,
+    CloudscapeTokens.lineHeightHeadingXs,
+    CloudscapeTokens.fontWeightHeadingXs,
   );
 
-  static final TextStyle headingS = _base.copyWith(
-    fontSize: 16,
-    height: 20 / 16,
-    fontWeight: weightBold,
+  // Code styles
+  TextStyle get code => GoogleFonts.sourceCodePro(
+    fontSize: CloudscapeTokens.fontSizeBodyM,
+    fontWeight: FontWeight.normal,
+    height: CloudscapeTokens.lineHeightBodyM / CloudscapeTokens.fontSizeBodyM,
   );
 
-  static final TextStyle headingXS = _base.copyWith(
-    fontSize: 14,
-    height: 18 / 14,
-    fontWeight: weightBold,
+  TextStyle get codeS => GoogleFonts.sourceCodePro(
+    fontSize: CloudscapeTokens.fontSizeBodyS,
+    fontWeight: FontWeight.normal,
+    height: CloudscapeTokens.lineHeightBodyS / CloudscapeTokens.fontSizeBodyS,
   );
 
-  static final TextStyle bodyM = _base.copyWith(
-    fontSize: 14,
-    height: 20 / 14,
-    fontWeight: weightNormal,
+  // Label styles
+  TextStyle get label => _createStyle(
+    CloudscapeTokens.fontSizeBodyM,
+    CloudscapeTokens.lineHeightBodyM,
+    FontWeight.w700,
   );
 
-  static final TextStyle bodyS = _base.copyWith(
-    fontSize: 12,
-    height: 16 / 12,
-    fontWeight: weightNormal,
-  );
+  @override
+  ThemeExtension<CloudscapeTypography> copyWith() =>
+      const CloudscapeTypography();
 
-  static final TextStyle code = _mono.copyWith(fontSize: 13, height: 16 / 13);
+  @override
+  ThemeExtension<CloudscapeTypography> lerp(
+    ThemeExtension<CloudscapeTypography>? other,
+    double t,
+  ) {
+    return this;
+  }
 }

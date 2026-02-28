@@ -1,18 +1,31 @@
-import 'package:flutter/animation.dart';
+import 'package:flutter/material.dart';
 
 /// Motion tokens for consistent animations.
-class CloudscapeMotion {
+class CloudscapeMotion extends ThemeExtension<CloudscapeMotion> {
+  const CloudscapeMotion();
+
   // Durations
-  static const Duration durationNone = Duration.zero;
-  static const Duration durationFast = Duration(milliseconds: 100);
-  static const Duration durationModerate = Duration(milliseconds: 200);
-  static const Duration durationSlow = Duration(milliseconds: 300);
+  Duration get durationNone => Duration.zero;
+  Duration get durationFast => const Duration(milliseconds: 100);
+  Duration get durationModerate => const Duration(milliseconds: 200);
+  Duration get durationSlow => const Duration(milliseconds: 300);
 
   // Easings
-  static const Curve easeIn = Curves.easeIn;
-  static const Curve easeOut = Curves.easeOut;
-  static const Curve easeInOut = Curves.easeInOut;
+  Curve get easeIn => Curves.easeIn;
+  Curve get easeOut => Curves.easeOut;
+  Curve get easeInOut => Curves.easeInOut;
 
   /// Cloudscape standard easing for state transitions.
-  static const Curve easingRefresh = Cubic(0.165, 0.84, 0.44, 1.0);
+  Curve get easingRefresh => const Cubic(0.165, 0.84, 0.44, 1.0);
+
+  @override
+  ThemeExtension<CloudscapeMotion> copyWith() => const CloudscapeMotion();
+
+  @override
+  ThemeExtension<CloudscapeMotion> lerp(
+    ThemeExtension<CloudscapeMotion>? other,
+    double t,
+  ) {
+    return this;
+  }
 }

@@ -1,37 +1,41 @@
 import 'package:flutter/material.dart';
 
-/// Border radius tokens for Cloudscape Design System.
-class CloudscapeRadius {
-  /// 2 pixels
-  static const double xxSmall = 2;
+import 'generated/cloudscape_tokens.dart';
 
-  /// 4 pixels
-  static const double xSmall = 4;
+class CloudscapeRadius extends ThemeExtension<CloudscapeRadius> {
+  const CloudscapeRadius();
 
-  /// 8 pixels
-  static const double small = 8;
+  double get alert => CloudscapeTokens.borderRadiusAlert;
+  double get badge => CloudscapeTokens.borderRadiusBadge;
+  double get button => CloudscapeTokens.borderRadiusButton;
+  double get calendarDayFocusRing =>
+      CloudscapeTokens.borderRadiusCalendarDayFocusRing;
+  double get container => CloudscapeTokens.borderRadiusContainer;
+  double get controlCircularFocusRing =>
+      CloudscapeTokens.borderRadiusControlCircularFocusRing;
+  double get controlDefaultFocusRing =>
+      CloudscapeTokens.borderRadiusControlDefaultFocusRing;
+  double get dropdown => CloudscapeTokens.borderRadiusDropdown;
+  double get dropzone => CloudscapeTokens.borderRadiusDropzone;
+  double get flashbar => CloudscapeTokens.borderRadiusFlashbar;
+  double get item => CloudscapeTokens.borderRadiusItem;
+  double get input => CloudscapeTokens.borderRadiusInput;
+  double get popover => CloudscapeTokens.borderRadiusPopover;
+  double get tabsFocusRing => CloudscapeTokens.borderRadiusTabsFocusRing;
+  double get tiles => CloudscapeTokens.borderRadiusTiles;
+  double get token => CloudscapeTokens.borderRadiusToken;
+  double get chatBubble => CloudscapeTokens.borderRadiusChatBubble;
+  double get tutorialPanelItem =>
+      CloudscapeTokens.borderRadiusTutorialPanelItem;
 
-  /// 12 pixels
-  static const double medium = 12;
+  @override
+  ThemeExtension<CloudscapeRadius> copyWith() => const CloudscapeRadius();
 
-  /// 16 pixels
-  static const double large = 16;
-
-  /// 20 pixels
-  static const double xLarge = 20;
-
-  /// Full pill shape (high value)
-  static const double pill = 999;
-
-  static const BorderRadius brXXSmall = BorderRadius.all(
-    Radius.circular(xxSmall),
-  );
-  static const BorderRadius brXSmall = BorderRadius.all(
-    Radius.circular(xSmall),
-  );
-  static const BorderRadius brSmall = BorderRadius.all(Radius.circular(small));
-  static const BorderRadius brMedium = BorderRadius.all(
-    Radius.circular(medium),
-  );
-  static const BorderRadius brLarge = BorderRadius.all(Radius.circular(large));
+  @override
+  ThemeExtension<CloudscapeRadius> lerp(
+    ThemeExtension<CloudscapeRadius>? other,
+    double t,
+  ) {
+    return this;
+  }
 }
