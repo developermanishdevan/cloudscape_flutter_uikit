@@ -42,6 +42,9 @@ class CloudscapeButton extends StatelessWidget {
   /// The side on which to show the icon. Either 'left' or 'right'.
   final String iconAlign;
 
+  /// Whether the button is in an active/selected state.
+  final bool isActive;
+
   /// Callback when the button is pressed.
   final VoidCallback? onPressed;
 
@@ -56,6 +59,7 @@ class CloudscapeButton extends StatelessWidget {
     this.disabled = false,
     this.loading = false,
     this.fullWidth = false,
+    this.isActive = false,
     this.wrapText = true,
     this.external = false,
     this.iconName,
@@ -78,6 +82,8 @@ class CloudscapeButton extends StatelessWidget {
       isButton: true,
       label: ariaLabel ?? text,
       builder: (context, isHovered) {
+        final isInteracting = isHovered || isActive;
+
         // --- STYLING CALCULATION ---
         final Color backgroundColor;
         final Color textColor;
@@ -87,21 +93,24 @@ class CloudscapeButton extends StatelessWidget {
         final EdgeInsets padding;
 
         // Default to normal
-        backgroundColor = disabled
-            ? colors.tokens.colorBackgroundButtonNormalDisabled
-            : (isHovered
-                  ? colors.tokens.colorBackgroundButtonNormalHover
-                  : colors.tokens.colorBackgroundButtonNormalDefault);
-        textColor = disabled
-            ? colors.tokens.colorTextButtonNormalDisabled
-            : (isHovered
-                  ? colors.tokens.colorTextButtonNormalHover
-                  : colors.tokens.colorTextButtonNormalDefault);
-        borderColor = disabled
-            ? colors.tokens.colorBorderButtonNormalDisabled
-            : (isHovered
-                  ? colors.tokens.colorBorderButtonNormalHover
-                  : colors.tokens.colorBorderButtonNormalDefault);
+        if (disabled) {
+          backgroundColor = colors.tokens.colorBackgroundButtonNormalDisabled;
+          textColor = colors.tokens.colorTextButtonNormalDisabled;
+          borderColor = colors.tokens.colorBorderButtonNormalDisabled;
+        } else if (isActive) {
+          backgroundColor = colors.tokens.colorBackgroundButtonNormalActive;
+          textColor = colors.tokens.colorTextButtonNormalActive;
+          borderColor = colors.tokens.colorBorderButtonNormalActive;
+        } else if (isHovered) {
+          backgroundColor = colors.tokens.colorBackgroundButtonNormalHover;
+          textColor = colors.tokens.colorTextButtonNormalHover;
+          borderColor = colors.tokens.colorBorderButtonNormalHover;
+        } else {
+          backgroundColor = colors.tokens.colorBackgroundButtonNormalDefault;
+          textColor = colors.tokens.colorTextButtonNormalDefault;
+          borderColor = colors.tokens.colorBorderButtonNormalDefault;
+        }
+
         borderWidth = border.button;
         borderRadius = radius.button;
         padding = EdgeInsets.symmetric(
@@ -119,25 +128,31 @@ class CloudscapeButton extends StatelessWidget {
 
         switch (variant) {
           case ButtonVariant.primary:
-            finalBackground = disabled
-                ? colors.tokens.colorBackgroundButtonPrimaryDisabled
-                : (isHovered
-                      ? colors.tokens.colorBackgroundButtonPrimaryHover
-                      : colors.tokens.colorBackgroundButtonPrimaryDefault);
-            finalText = disabled
-                ? colors.tokens.colorTextButtonPrimaryDisabled
-                : (isHovered
-                      ? colors.tokens.colorTextButtonPrimaryHover
-                      : colors.tokens.colorTextButtonPrimaryDefault);
+            if (disabled) {
+              finalBackground =
+                  colors.tokens.colorBackgroundButtonPrimaryDisabled;
+              finalText = colors.tokens.colorTextButtonPrimaryDisabled;
+            } else if (isActive) {
+              finalBackground =
+                  colors.tokens.colorBackgroundButtonPrimaryActive;
+              finalText = colors.tokens.colorTextButtonPrimaryActive;
+            } else if (isHovered) {
+              finalBackground = colors.tokens.colorBackgroundButtonPrimaryHover;
+              finalText = colors.tokens.colorTextButtonPrimaryHover;
+            } else {
+              finalBackground =
+                  colors.tokens.colorBackgroundButtonPrimaryDefault;
+              finalText = colors.tokens.colorTextButtonPrimaryDefault;
+            }
             finalBorder = Colors.transparent;
             finalBorderWidth = 0;
             break;
           case ButtonVariant.link:
           case ButtonVariant.inlineLink:
-            finalBackground = isHovered
+            finalBackground = isInteracting
                 ? colors.tokens.colorBackgroundButtonLinkHover
                 : Colors.transparent;
-            finalText = isHovered
+            finalText = isInteracting
                 ? colors.tokens.colorTextLinkHover
                 : colors.tokens.colorTextLinkDefault;
             finalBorder = Colors.transparent;
@@ -151,12 +166,14 @@ class CloudscapeButton extends StatelessWidget {
             break;
           case ButtonVariant.icon:
           case ButtonVariant.inlineIcon:
-            finalBackground = isHovered
+            finalBackground = isInteracting
                 ? colors.tokens.colorBackgroundButtonNormalHover
                 : Colors.transparent;
             finalText = disabled
                 ? colors.tokens.colorTextButtonIconDisabled
-                : colors.tokens.colorTextInteractiveDefault;
+                : (isInteracting
+                      ? colors.tokens.colorTextInteractiveActive
+                      : colors.tokens.colorTextInteractiveDefault);
             finalBorder = Colors.transparent;
             finalBorderWidth = 0;
             finalPadding = EdgeInsets.all(spacing.scaledXxs);

@@ -137,6 +137,31 @@ class _UiKitExampleState extends State<UiKitExample> {
     ),
   ];
 
+  // Button Dropdown Configurator State
+  bool _bddDisabled = false;
+  bool _bddLoading = false;
+  bool _bddFullWidth = false;
+  bool _bddExpandable = false;
+
+  final List<ButtonDropdownItemOrGroup> _bddItems = [
+    const ButtonDropdownItem(id: 'id1', text: 'Action 1'),
+    const ButtonDropdownItem(id: 'id2', text: 'Action 2'),
+    const ButtonDropdownGroup(
+      id: 'group1',
+      text: 'Group heading',
+      items: [
+        ButtonDropdownItem(id: 'id3', text: 'Action 3'),
+        ButtonDropdownItem(
+          id: 'id4',
+          text: 'Action 4',
+          disabled: true,
+          disabledReason: 'Reason for disabling',
+        ),
+      ],
+    ),
+    const ButtonDropdownItem(id: 'id5', text: 'Action 5', external: true),
+  ];
+
   // Button Configurator State
   bool _btnDisabled = false;
   bool _btnLoading = false;
@@ -577,6 +602,86 @@ class _UiKitExampleState extends State<UiKitExample> {
                     Text(
                       'Active breadcrumb: $_activeBreadcrumb',
                       style: typography.bodyS,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Button Dropdown Showcase
+            SizedBox(
+              width: 500,
+              child: CloudscapeBox(
+                header: Container(
+                  height: 50,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: spacing.scaledM),
+                  child: Text(
+                    'Button Dropdown Showcase',
+                    style: typography.headingL,
+                  ),
+                ),
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Examples', style: typography.headingM),
+                    SizedBox(height: spacing.scaledS),
+                    Wrap(
+                      spacing: spacing.scaledS,
+                      runSpacing: spacing.scaledS,
+                      children: [
+                        CloudscapeButtonDropdown(
+                          text: 'Default dropdown',
+                          items: _bddItems,
+                          disabled: _bddDisabled,
+                          loading: _bddLoading,
+                          fullWidth: _bddFullWidth,
+                          expandableGroups: _bddExpandable,
+                        ),
+                        CloudscapeButtonDropdown(
+                          text: 'Primary dropdown',
+                          variant: ButtonVariant.primary,
+                          items: _bddItems,
+                          disabled: _bddDisabled,
+                          loading: _bddLoading,
+                          expandableGroups: _bddExpandable,
+                        ),
+                      ],
+                    ),
+                    const Divider(height: 32),
+                    Text('Configuration', style: typography.headingM),
+                    SizedBox(height: spacing.scaledS),
+                    Column(
+                      children: [
+                        CheckboxListTile(
+                          title: const Text('disabled'),
+                          value: _bddDisabled,
+                          onChanged: (v) => setState(() => _bddDisabled = v!),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                        ),
+                        CheckboxListTile(
+                          title: const Text('loading'),
+                          value: _bddLoading,
+                          onChanged: (v) => setState(() => _bddLoading = v!),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                        ),
+                        CheckboxListTile(
+                          title: const Text('fullWidth'),
+                          value: _bddFullWidth,
+                          onChanged: (v) => setState(() => _bddFullWidth = v!),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                        ),
+                        CheckboxListTile(
+                          title: const Text('expandableGroups'),
+                          value: _bddExpandable,
+                          onChanged: (v) => setState(() => _bddExpandable = v!),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                        ),
+                      ],
                     ),
                   ],
                 ),
