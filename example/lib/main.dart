@@ -21,21 +21,21 @@ class MyApp extends StatelessWidget {
           // Sample Theme Values:
           // You can customize colors and fonts dynamicly.
           theme: CloudscapeTheme.light(
-            primary: const Color.fromARGB(255, 148, 156, 26), // Brand Green
-            onPrimary: Colors.white,
-            surface: const Color(0xFFF2F3F5), // Light Gray background
-            onSurface: const Color(0xFF16191F), // Dark Gray text
-            error: const Color(0xFFD91515), // Error Red
-            onError: Colors.white,
+            // primary: const Color.fromARGB(255, 148, 156, 26), // Brand Green
+            // onPrimary: Colors.white,
+            // surface: const Color(0xFFF2F3F5), // Light Gray background
+            // onSurface: const Color(0xFF16191F), // Dark Gray text
+            // error: const Color(0xFFD91515), // Error Red
+            // onError: Colors.white,
             // fontFamily: "Acme",
           ),
           darkTheme: CloudscapeTheme.dark(
-            primary: const Color.fromARGB(255, 150, 156, 63),
-            onPrimary: Colors.white,
-            surface: const Color(0xFF0F141A), // Deep Dark background
-            onSurface: const Color(0xFFE9EBED), // Light Gray text
-            error: const Color(0xFFD13212), // Darker Error Red
-            onError: Colors.white,
+            // primary: const Color.fromARGB(255, 150, 156, 63),
+            // onPrimary: Colors.white,
+            // surface: const Color(0xFF0F141A), // Deep Dark background
+            // onSurface: const Color(0xFFE9EBED), // Light Gray text
+            // error: const Color(0xFFD13212), // Darker Error Red
+            // onError: Colors.white,
             // fontFamily: "Acme",
           ),
           debugShowCheckedModeBanner: false,
