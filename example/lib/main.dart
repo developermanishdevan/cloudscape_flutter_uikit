@@ -90,13 +90,15 @@ class UiKitExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.cloudscapeColors;
     final typography = context.cloudscapeTypography;
     final spacing = context.cloudscapeSpacing;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cloudscape Card Showcase'),
+        title: Text(
+          'Cloudscape Typography Showcase',
+          style: typography.displayNormal,
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -106,57 +108,88 @@ class UiKitExample extends StatelessWidget {
           spacing: spacing.scaledM,
           runSpacing: spacing.scaledM,
           children: [
-            // Card that looks like the User's provided image (Alert demo)
             SizedBox(
-              width: 400,
+              width: 700,
               child: CloudscapeCard(
                 header: Container(
                   height: 50,
-                  color: Colors
-                      .transparent, // Let parent handle the background color
-                  child: Center(
-                    child: Text(
-                      'Card header',
-                      style: typography.bodyM.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: colors.tokens.colorTextHeadingDefault,
-                      ),
-                    ),
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: spacing.scaledM),
+                  child: Text(
+                    'Typography Showcase',
+                    style: typography.headingL,
                   ),
                 ),
                 body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'A brief message that provides information or instructs users to take a specific action.',
-                      style: typography.bodyM.copyWith(
-                        color: colors.tokens.colorTextBodyDefault,
-                      ),
+                    _ShowcaseItem(
+                      label: 'displayBold',
+                      style: typography.displayBold,
                     ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Simple Card Example
-            SizedBox(
-              width: 300,
-              child: CloudscapeCard(
-                body: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Simple Card Content', style: typography.headingS),
-                    SizedBox(height: spacing.scaledXs),
-                    Text(
-                      'This is a card without a header section.',
-                      style: typography.bodyM,
+                    _ShowcaseItem(
+                      label: 'displayNormal',
+                      style: typography.displayNormal,
                     ),
+                    _ShowcaseItem(
+                      label: 'headingXl',
+                      style: typography.headingXl,
+                    ),
+                    _ShowcaseItem(
+                      label: 'headingL',
+                      style: typography.headingL,
+                    ),
+                    _ShowcaseItem(
+                      label: 'headingM',
+                      style: typography.headingM,
+                    ),
+                    _ShowcaseItem(
+                      label: 'headingS',
+                      style: typography.headingS,
+                    ),
+                    _ShowcaseItem(
+                      label: 'headingXs',
+                      style: typography.headingXs,
+                    ),
+                    const Divider(height: 32),
+                    _ShowcaseItem(label: 'bodyM', style: typography.bodyM),
+                    _ShowcaseItem(label: 'bodyS', style: typography.bodyS),
+                    const Divider(height: 32),
+                    _ShowcaseItem(label: 'code', style: typography.code),
+                    _ShowcaseItem(label: 'codeS', style: typography.codeS),
                   ],
                 ),
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ShowcaseItem extends StatelessWidget {
+  final String label;
+  final TextStyle style;
+
+  const _ShowcaseItem({required this.label, required this.style});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: context.cloudscapeSpacing.scaledM),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: context.cloudscapeTypography.bodyS.copyWith(
+              color: context.cloudscapeColors.tokens.colorTextBodySecondary,
+            ),
+          ),
+          SizedBox(height: context.cloudscapeSpacing.scaledXxs),
+          Text('The quick brown fox jumps over the lazy dog', style: style),
+        ],
       ),
     );
   }

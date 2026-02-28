@@ -18,21 +18,17 @@ class CloudscapeTypography extends ThemeExtension<CloudscapeTypography> {
     );
   }
 
-  // Body styles
-  TextStyle get bodyM => _createStyle(
-    CloudscapeTokens.fontSizeBodyM,
-    CloudscapeTokens.lineHeightBodyM,
-  );
-  TextStyle get bodyS => _createStyle(
-    CloudscapeTokens.fontSizeBodyS,
-    CloudscapeTokens.lineHeightBodyS,
-  );
-
   // Display styles
-  TextStyle get displayL => _createStyle(
+  TextStyle get displayBold => _createStyle(
     CloudscapeTokens.fontSizeDisplayL,
     CloudscapeTokens.lineHeightDisplayL,
-    FontWeight.w900,
+    FontWeight.w700,
+  );
+
+  TextStyle get displayNormal => _createStyle(
+    CloudscapeTokens.fontSizeDisplayL,
+    CloudscapeTokens.lineHeightDisplayL,
+    FontWeight.normal,
   );
 
   // Heading styles
@@ -60,6 +56,16 @@ class CloudscapeTypography extends ThemeExtension<CloudscapeTypography> {
     CloudscapeTokens.fontSizeHeadingXs,
     CloudscapeTokens.lineHeightHeadingXs,
     CloudscapeTokens.fontWeightHeadingXs,
+  );
+
+  // Body styles
+  TextStyle get bodyM => _createStyle(
+    CloudscapeTokens.fontSizeBodyM,
+    CloudscapeTokens.lineHeightBodyM,
+  );
+  TextStyle get bodyS => _createStyle(
+    CloudscapeTokens.fontSizeBodyS,
+    CloudscapeTokens.lineHeightBodyS,
   );
 
   // Code styles
