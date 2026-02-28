@@ -99,6 +99,8 @@ class _UiKitExampleState extends State<UiKitExample> {
 
   // Anchor Navigation State
   String _activeAnchor = '#section-1.1';
+  bool _group1Expanded = true;
+  bool _group2Expanded = false;
 
   // Handlers
   void _resetConfig() {
@@ -443,6 +445,65 @@ class _UiKitExampleState extends State<UiKitExample> {
                           targetId: 'section-3',
                           level: 1,
                           info: 'Updated',
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: spacing.scaledM),
+
+                  // Variant 4: With Expandable Section & Without Grey Line
+                  CloudscapeBox(
+                    header: Container(
+                      height: 50,
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: spacing.scaledM,
+                      ),
+                      child: Text(
+                        'With expandable section (no track)',
+                        style: typography.headingL,
+                      ),
+                    ),
+                    body: CloudscapeAnchorNavigation(
+                      activeTargetId: _activeAnchor,
+                      showTrack: false,
+                      onFollow: (anchor) {
+                        setState(() {
+                          _activeAnchor = anchor.targetId;
+                          if (anchor.targetId == 'group-1') {
+                            _group1Expanded = !_group1Expanded;
+                          } else if (anchor.targetId == 'group-2') {
+                            _group2Expanded = !_group2Expanded;
+                          }
+                        });
+                      },
+                      anchors: [
+                        AnchorNavigationItem(
+                          text: 'Expandable Group 1',
+                          targetId: 'group-1',
+                          level: 1,
+                          expanded: _group1Expanded,
+                        ),
+                        const AnchorNavigationItem(
+                          text: 'Nested Section 1.1',
+                          targetId: 'nested-1.1',
+                          level: 2,
+                        ),
+                        const AnchorNavigationItem(
+                          text: 'Nested Section 1.2',
+                          targetId: 'nested-1.2',
+                          level: 2,
+                        ),
+                        AnchorNavigationItem(
+                          text: 'Expandable Group 2',
+                          targetId: 'group-2',
+                          level: 1,
+                          expanded: _group2Expanded,
+                        ),
+                        const AnchorNavigationItem(
+                          text: 'Nested Section 2.1',
+                          targetId: 'nested-2.1',
+                          level: 2,
                         ),
                       ],
                     ),
