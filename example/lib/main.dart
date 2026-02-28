@@ -48,6 +48,7 @@ class ThemeControllerWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final spacing = context.cloudscapeSpacing;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -57,13 +58,16 @@ class ThemeControllerWrapper extends StatelessWidget {
         children: [
           child,
           Positioned(
-            right: CloudscapeSpacing.medium,
-            bottom: CloudscapeSpacing.medium,
+            right: spacing.scaledM,
+            bottom: spacing.scaledM,
             child: FloatingActionButton(
               mini: true,
               backgroundColor: isDarkMode
-                  ? CloudscapePalette.darkContainer
-                  : CloudscapePalette.white,
+                  ? context
+                        .cloudscapeColors
+                        .tokens
+                        .colorBackgroundContainerContent
+                  : Colors.white,
               elevation: 4,
               shape: const CircleBorder(),
               onPressed: () {
@@ -71,9 +75,7 @@ class ThemeControllerWrapper extends StatelessWidget {
               },
               child: Icon(
                 isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                color: isDarkMode
-                    ? CloudscapePalette.white
-                    : CloudscapePalette.grey900,
+                color: isDarkMode ? Colors.white : Colors.black,
               ),
             ),
           ),
@@ -88,7 +90,9 @@ class UiKitExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = CloudscapeThemeExtension.of(context);
+    final colors = context.cloudscapeColors;
+    final typography = context.cloudscapeTypography;
+    final spacing = context.cloudscapeSpacing;
 
     return Scaffold(
       appBar: AppBar(
@@ -97,10 +101,10 @@ class UiKitExample extends StatelessWidget {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(CloudscapeSpacing.large),
+        padding: EdgeInsets.all(spacing.scaledL),
         child: Wrap(
-          spacing: CloudscapeSpacing.medium,
-          runSpacing: CloudscapeSpacing.medium,
+          spacing: spacing.scaledM,
+          runSpacing: spacing.scaledM,
           children: [
             // Card that looks like the User's provided image (Alert demo)
             SizedBox(
@@ -113,9 +117,9 @@ class UiKitExample extends StatelessWidget {
                   child: Center(
                     child: Text(
                       'Card header',
-                      style: CloudscapeTypography.bodyM.copyWith(
+                      style: typography.bodyM.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: theme.colors.textHeadingDefault,
+                        color: colors.tokens.colorTextHeadingDefault,
                       ),
                     ),
                   ),
@@ -125,8 +129,8 @@ class UiKitExample extends StatelessWidget {
                   children: [
                     Text(
                       'A brief message that provides information or instructs users to take a specific action.',
-                      style: CloudscapeTypography.bodyM.copyWith(
-                        color: theme.colors.textBodyDefault,
+                      style: typography.bodyM.copyWith(
+                        color: colors.tokens.colorTextBodyDefault,
                       ),
                     ),
                   ],
@@ -135,15 +139,18 @@ class UiKitExample extends StatelessWidget {
             ),
 
             // Simple Card Example
-            const SizedBox(
+            SizedBox(
               width: 300,
               child: CloudscapeCard(
                 body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Simple Card Content'),
-                    SizedBox(height: 8),
-                    Text('This is a card without a header section.'),
+                    Text('Simple Card Content', style: typography.headingS),
+                    SizedBox(height: spacing.scaledXs),
+                    Text(
+                      'This is a card without a header section.',
+                      style: typography.bodyM,
+                    ),
                   ],
                 ),
               ),

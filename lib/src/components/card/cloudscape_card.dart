@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../foundation/theme/cloudscape_theme.dart';
-import '../../foundation/tokens/radius.dart';
-import '../../foundation/tokens/spacing.dart';
 import '../base/component_base.dart';
 
 /// A base card component for Cloudscape Design System.
@@ -17,18 +15,15 @@ class CloudscapeCard extends StatelessWidget {
   final Widget body;
 
   /// Padding applied to the header section.
-  /// Defaults to [CloudscapeSpacing.medium].
   final EdgeInsets? headerPadding;
 
   /// Padding applied to the body section.
-  /// Defaults to [CloudscapeSpacing.medium].
   final EdgeInsets? bodyPadding;
 
   /// Optional callback when the card is tapped.
   final VoidCallback? onTap;
 
   /// Border radius for the card.
-  /// Defaults to [CloudscapeRadius.brMedium].
   final BorderRadius? borderRadius;
 
   const CloudscapeCard({
@@ -43,26 +38,33 @@ class CloudscapeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = CloudscapeThemeExtension.of(context);
-    final effectiveBorderRadius = borderRadius ?? CloudscapeRadius.brMedium;
+    final colors = context.cloudscapeColors;
+    final spacing = context.cloudscapeSpacing;
+    final rds = context.cloudscapeRadius;
+
+    final effectiveBorderRadius =
+        borderRadius ?? BorderRadius.all(Radius.circular(rds.container));
+    final defaultPadding = EdgeInsets.all(spacing.scaledM);
 
     return ComponentsBase(
-      onPointerEnter:
-          (_) {}, // Enable hover tracking if needed by ComponentsBase
+      cursor: onTap != null ? SystemMouseCursors.click : MouseCursor.defer,
+      onPointerEnter: (_) {}, // Enable hover tracking needed by ComponentsBase
       builder: (context, isHovered) {
         return GestureDetector(
           onTap: onTap,
           child: Container(
             decoration: BoxDecoration(
-              color: theme.colors.backgroundContainerContent,
+              color: colors.tokens.colorBackgroundContainerContent,
               borderRadius: effectiveBorderRadius,
-              border: Border.all(color: theme.colors.borderDefault, width: 1),
+              border: Border.all(
+                color: colors.tokens.colorBorderDividerDefault,
+                width: 1,
+              ),
               boxShadow: isHovered && onTap != null
                   ? [
                       BoxShadow(
-                        color: theme.colors.borderDefault.withValues(
-                          alpha: 0.3,
-                        ),
+                        color: colors.tokens.colorBorderDividerDefault
+                            .withValues(alpha: 0.3),
                         blurRadius: 8,
                         offset: const Offset(0, 4),
                       ),
@@ -72,7 +74,7 @@ class CloudscapeCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius:
                   effectiveBorderRadius -
-                  BorderRadius.all(
+                  const BorderRadius.all(
                     Radius.circular(1),
                   ), // Slightly less to account for border
               child: Column(
@@ -81,24 +83,17 @@ class CloudscapeCard extends StatelessWidget {
                 children: [
                   if (header != null) ...[
                     Container(
-                      color: theme.colors.backgroundContainerMain,
-                      padding:
-                          headerPadding ??
-                          const EdgeInsets.all(CloudscapeSpacing.medium),
+                      color: colors.tokens.colorBackgroundContainerHeader,
+                      padding: headerPadding ?? defaultPadding,
                       child: header,
                     ),
                     Divider(
                       height: 1,
                       thickness: 1,
-                      color: theme.colors.borderDividerDefault,
+                      color: colors.tokens.colorBorderDividerSecondary,
                     ),
                   ],
-                  Padding(
-                    padding:
-                        bodyPadding ??
-                        const EdgeInsets.all(CloudscapeSpacing.medium),
-                    child: body,
-                  ),
+                  Padding(padding: bodyPadding ?? defaultPadding, child: body),
                 ],
               ),
             ),

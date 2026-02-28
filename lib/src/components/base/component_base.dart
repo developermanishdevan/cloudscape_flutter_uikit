@@ -36,7 +36,7 @@ class ComponentsBase extends StatefulWidget {
   /// Callback when the mouse hovers over the region.
   final ValueChanged<PointerHoverEvent>? onPointerHover;
 
-  /// The cursor to display when hovering.
+  /// The cursor to display when hovering. If null, automatically inferred.
   final MouseCursor? cursor;
 
   /// Whether this widget should be treated as a button by screen readers.
@@ -75,9 +75,9 @@ class _ComponentsBaseState extends State<ComponentsBase> {
     return MouseRegion(
       cursor:
           widget.cursor ??
-          (widget.enabled
+          (widget.isButton && widget.enabled
               ? SystemMouseCursors.click
-              : SystemMouseCursors.basic),
+              : MouseCursor.defer),
       onEnter: (event) {
         if (!widget.enabled) return;
         setState(() => _isHovered = true);
