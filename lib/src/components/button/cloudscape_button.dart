@@ -92,23 +92,28 @@ class CloudscapeButton extends StatelessWidget {
         final double borderRadius;
         final EdgeInsets padding;
 
+        final theme = Theme.of(context);
+        final colorScheme = theme.colorScheme;
+        final bool isDark = theme.brightness == Brightness.dark;
+
         // Default to normal
         if (disabled) {
           backgroundColor = colors.tokens.colorBackgroundButtonNormalDisabled;
           textColor = colors.tokens.colorTextButtonNormalDisabled;
           borderColor = colors.tokens.colorBorderButtonNormalDisabled;
         } else if (isActive) {
-          backgroundColor = colors.tokens.colorBackgroundButtonNormalActive;
-          textColor = colors.tokens.colorTextButtonNormalActive;
-          borderColor = colors.tokens.colorBorderButtonNormalActive;
+          backgroundColor = colorScheme.primary.withAlpha(30);
+          textColor = _applyActive(colorScheme.primary, isDark);
+          borderColor = _applyActive(colorScheme.primary, isDark);
         } else if (isHovered) {
-          backgroundColor = colors.tokens.colorBackgroundButtonNormalHover;
-          textColor = colors.tokens.colorTextButtonNormalHover;
-          borderColor = colors.tokens.colorBorderButtonNormalHover;
+          backgroundColor = colorScheme.primary.withAlpha(30);
+          textColor = _applyHover(colorScheme.primary, isDark);
+          borderColor = _applyHover(colorScheme.primary, isDark);
         } else {
           backgroundColor = colors.tokens.colorBackgroundButtonNormalDefault;
-          textColor = colors.tokens.colorTextButtonNormalDefault;
-          borderColor = colors.tokens.colorBorderButtonNormalDefault;
+          // Use the dynamic primary color to ensure consistency across themes.
+          textColor = colorScheme.primary;
+          borderColor = colorScheme.primary;
         }
 
         borderWidth = border.button;
@@ -133,16 +138,14 @@ class CloudscapeButton extends StatelessWidget {
                   colors.tokens.colorBackgroundButtonPrimaryDisabled;
               finalText = colors.tokens.colorTextButtonPrimaryDisabled;
             } else if (isActive) {
-              finalBackground =
-                  colors.tokens.colorBackgroundButtonPrimaryActive;
-              finalText = colors.tokens.colorTextButtonPrimaryActive;
+              finalBackground = _applyActive(colorScheme.primary, isDark);
+              finalText = colorScheme.onPrimary;
             } else if (isHovered) {
-              finalBackground = colors.tokens.colorBackgroundButtonPrimaryHover;
-              finalText = colors.tokens.colorTextButtonPrimaryHover;
+              finalBackground = _applyHover(colorScheme.primary, isDark);
+              finalText = colorScheme.onPrimary;
             } else {
-              finalBackground =
-                  colors.tokens.colorBackgroundButtonPrimaryDefault;
-              finalText = colors.tokens.colorTextButtonPrimaryDefault;
+              finalBackground = colorScheme.primary;
+              finalText = colorScheme.onPrimary;
             }
             finalBorder = Colors.transparent;
             finalBorderWidth = 0;
@@ -150,11 +153,11 @@ class CloudscapeButton extends StatelessWidget {
           case ButtonVariant.link:
           case ButtonVariant.inlineLink:
             finalBackground = isInteracting
-                ? colors.tokens.colorBackgroundButtonLinkHover
+                ? colorScheme.primary.withAlpha(30)
                 : Colors.transparent;
             finalText = isInteracting
-                ? colors.tokens.colorTextLinkHover
-                : colors.tokens.colorTextLinkDefault;
+                ? _applyHover(colorScheme.primary, isDark)
+                : colorScheme.primary;
             finalBorder = Colors.transparent;
             finalBorderWidth = 0;
             finalPadding = variant == ButtonVariant.inlineLink
@@ -167,12 +170,12 @@ class CloudscapeButton extends StatelessWidget {
           case ButtonVariant.icon:
           case ButtonVariant.inlineIcon:
             finalBackground = isInteracting
-                ? colors.tokens.colorBackgroundButtonNormalHover
+                ? colorScheme.primary.withAlpha(30)
                 : Colors.transparent;
             finalText = disabled
                 ? colors.tokens.colorTextButtonIconDisabled
                 : (isInteracting
-                      ? colors.tokens.colorTextInteractiveActive
+                      ? _applyHover(colorScheme.primary, isDark)
                       : colors.tokens.colorTextInteractiveDefault);
             finalBorder = Colors.transparent;
             finalBorderWidth = 0;
@@ -248,5 +251,36 @@ class CloudscapeButton extends StatelessWidget {
         );
       },
     );
+  }
+
+  Color _applyHover(Color color, bool isDark) {
+    // Cloudscape: hover is darker in light mode, lighter in dark mode
+    if (isDark) {
+      return HSVColor.fromColor(color)
+          .withSaturation(
+            (HSVColor.fromColor(color).saturation - 0.1).clamp(0.0, 1.0),
+          )
+          .withValue((HSVColor.fromColor(color).value + 0.1).clamp(0.0, 1.0))
+          .toColor();
+    } else {
+      return HSVColor.fromColor(color)
+          .withValue((HSVColor.fromColor(color).value - 0.1).clamp(0.0, 1.0))
+          .toColor();
+    }
+  }
+
+  Color _applyActive(Color color, bool isDark) {
+    if (isDark) {
+      return HSVColor.fromColor(color)
+          .withSaturation(
+            (HSVColor.fromColor(color).saturation - 0.2).clamp(0.0, 1.0),
+          )
+          .withValue((HSVColor.fromColor(color).value + 0.2).clamp(0.0, 1.0))
+          .toColor();
+    } else {
+      return HSVColor.fromColor(color)
+          .withValue((HSVColor.fromColor(color).value - 0.2).clamp(0.0, 1.0))
+          .toColor();
+    }
   }
 }

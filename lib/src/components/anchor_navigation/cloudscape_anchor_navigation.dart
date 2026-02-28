@@ -134,7 +134,7 @@ class _AnchorItemWidget extends StatelessWidget {
               child: Container(
                 width: 2,
                 decoration: BoxDecoration(
-                  color: colors.tokens.colorTextAccent,
+                  color: Theme.of(context).colorScheme.primary,
                   borderRadius: BorderRadius.circular(radius.tabsFocusRing),
                 ),
               ),
@@ -148,7 +148,7 @@ class _AnchorItemWidget extends StatelessWidget {
                     ? CloudscapeTokens.fontWeightButton
                     : typography.bodyM.fontWeight,
                 color: isInteracting
-                    ? colors.tokens.colorTextAccent
+                    ? Theme.of(context).colorScheme.primary
                     : colors.tokens.colorTextBodySecondary,
               );
 
@@ -175,7 +175,7 @@ class _AnchorItemWidget extends StatelessWidget {
                               anchor.info!,
                               style: typography.bodyS.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: colors.tokens.colorTextLinkDefault,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],

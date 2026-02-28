@@ -21,21 +21,21 @@ class MyApp extends StatelessWidget {
           // Sample Theme Values:
           // You can customize colors and fonts dynamicly.
           theme: CloudscapeTheme.light(
-            // primary: const Color.fromARGB(255, 0, 154, 90), // Brand Green
-            // onPrimary: Colors.white,
-            // surface: const Color(0xFFF2F3F5), // Light Gray background
-            // onSurface: const Color(0xFF16191F), // Dark Gray text
-            // error: const Color(0xFFD91515), // Error Red
-            // onError: Colors.white,
+            primary: const Color.fromARGB(255, 148, 156, 26), // Brand Green
+            onPrimary: Colors.white,
+            surface: const Color(0xFFF2F3F5), // Light Gray background
+            onSurface: const Color(0xFF16191F), // Dark Gray text
+            error: const Color(0xFFD91515), // Error Red
+            onError: Colors.white,
             // fontFamily: "Acme",
           ),
           darkTheme: CloudscapeTheme.dark(
-            // primary: const Color.fromARGB(255, 0, 154, 90),
-            // onPrimary: Colors.white,
-            // surface: const Color(0xFF0F141A), // Deep Dark background
-            // onSurface: const Color(0xFFE9EBED), // Light Gray text
-            // error: const Color(0xFFD13212), // Darker Error Red
-            // onError: Colors.white,
+            primary: const Color.fromARGB(255, 150, 156, 63),
+            onPrimary: Colors.white,
+            surface: const Color(0xFF0F141A), // Deep Dark background
+            onSurface: const Color(0xFFE9EBED), // Light Gray text
+            error: const Color(0xFFD13212), // Darker Error Red
+            onError: Colors.white,
             // fontFamily: "Acme",
           ),
           debugShowCheckedModeBanner: false,
@@ -112,8 +112,6 @@ class UiKitExample extends StatefulWidget {
 
 class _UiKitExampleState extends State<UiKitExample> {
   // Configurable Alert State
-  bool _configVisible = true;
-  bool _configDismissible = false;
 
   // Anchor Navigation State
   String _activeAnchor = '#section-1.1';
@@ -196,26 +194,10 @@ class _UiKitExampleState extends State<UiKitExample> {
     BreadcrumbItem(text: 'Breadcrumb group', href: 'breadcrumb-group'),
   ];
 
-  // Handlers
-  void _resetConfig() {
-    setState(() {
-      _configVisible = true;
-      _configDismissible = false;
-    });
-  }
-
-  void _hideAlert() {
-    setState(() {
-      _configVisible = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final typography = context.cloudscapeTypography;
     final spacing = context.cloudscapeSpacing;
-    final colors = context.cloudscapeColors;
-    final radius = context.cloudscapeRadius;
 
     return Scaffold(
       appBar: AppBar(
@@ -294,109 +276,16 @@ class _UiKitExampleState extends State<UiKitExample> {
                     CloudscapeAlert(
                       type: AlertType.info,
                       header: const Text('Updates available'),
-                      action: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              colors.tokens.colorBackgroundButtonPrimaryDefault,
-                          foregroundColor:
-                              colors.tokens.colorTextButtonPrimaryDefault,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(radius.button),
-                          ),
-                        ),
+                      action: CloudscapeButton(
+                        variant: ButtonVariant.primary,
                         onPressed: () {},
-                        child: const Text('View updates'),
+                        text: 'View updates',
                       ),
                       child: const Text(
                         'There is a new version available for download.',
                       ),
                     ),
                     SizedBox(height: spacing.scaledXl),
-
-                    const Divider(),
-                    SizedBox(height: spacing.scaledM),
-
-                    // Configuration Section
-                    Text('Configuration', style: typography.headingM),
-                    SizedBox(height: spacing.scaledM),
-
-                    Container(
-                      padding: EdgeInsets.all(spacing.scaledS),
-                      decoration: BoxDecoration(
-                        color: colors.tokens.colorBackgroundContainerContent,
-                        border: Border.all(
-                          color: colors.tokens.colorBorderItemFocused,
-                          width: 1,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          CloudscapeAlert(
-                            type: AlertType.info,
-                            header: const Text('Configurable alert'),
-                            visible: _configVisible,
-                            dismissible: _configDismissible,
-                            onDismiss: _hideAlert,
-                            child: const Text(
-                              'Configure properties to see them applied to this alert.',
-                            ),
-                          ),
-                          SizedBox(height: spacing.scaledM),
-                          Text('Properties', style: typography.headingS),
-                          SizedBox(height: spacing.scaledXs),
-                          Row(
-                            children: [
-                              Text('dismissible', style: typography.bodyM),
-                              Switch(
-                                value: _configDismissible,
-                                onChanged: (val) {
-                                  setState(() {
-                                    _configDismissible = val;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Text('visible', style: typography.bodyM),
-                              Switch(
-                                value: _configVisible,
-                                onChanged: (val) {
-                                  setState(() {
-                                    _configVisible = val;
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: spacing.scaledM),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: OutlinedButton(
-                              onPressed: _resetConfig,
-                              style: OutlinedButton.styleFrom(
-                                side: BorderSide(
-                                  color: colors
-                                      .tokens
-                                      .colorBorderButtonNormalDefault,
-                                ),
-                                foregroundColor:
-                                    colors.tokens.colorTextButtonNormalDefault,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                    radius.button,
-                                  ),
-                                ),
-                              ),
-                              child: const Text('Reset'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               ),

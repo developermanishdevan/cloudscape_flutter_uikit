@@ -111,18 +111,39 @@ class _BreadcrumbItemWidget extends StatelessWidget {
             item.text,
             style: typography.bodyM.copyWith(
               color: isHovered
-                  ? colors.tokens.colorTextLinkHover
-                  : colors.tokens.colorTextLinkDefault,
+                  ? _applyHover(
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).brightness == Brightness.dark,
+                    )
+                  : Theme.of(context).colorScheme.primary,
               decoration: isHovered
                   ? TextDecoration.underline
                   : TextDecoration.none,
               decorationColor: isHovered
-                  ? colors.tokens.colorTextLinkHover
-                  : colors.tokens.colorTextLinkDefault,
+                  ? _applyHover(
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).brightness == Brightness.dark,
+                    )
+                  : Theme.of(context).colorScheme.primary,
             ),
           ),
         );
       },
     );
+  }
+
+  Color _applyHover(Color color, bool isDark) {
+    if (isDark) {
+      return HSVColor.fromColor(color)
+          .withSaturation(
+            (HSVColor.fromColor(color).saturation - 0.1).clamp(0.0, 1.0),
+          )
+          .withValue((HSVColor.fromColor(color).value + 0.1).clamp(0.0, 1.0))
+          .toColor();
+    } else {
+      return HSVColor.fromColor(color)
+          .withValue((HSVColor.fromColor(color).value - 0.1).clamp(0.0, 1.0))
+          .toColor();
+    }
   }
 }

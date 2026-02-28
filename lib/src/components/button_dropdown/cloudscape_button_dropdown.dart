@@ -99,25 +99,24 @@ class CloudscapeButtonDropdown extends StatelessWidget {
           enabled: !disabled && !loading,
           isButton: true,
           builder: (context, isHovered) {
-            // Determine the foreground color for the content inside the button
+            final theme = Theme.of(context);
+            final colorScheme = theme.colorScheme;
+            final bool isDark = theme.brightness == Brightness.dark;
+            final Color onPrimary = colorScheme.onPrimary;
             final Color finalText;
 
             if (disabled) {
               finalText = variant == ButtonVariant.primary
                   ? colors.tokens.colorTextButtonPrimaryDisabled
                   : colors.tokens.colorTextButtonNormalDisabled;
-            } else if (isOpened) {
+            } else if (isOpened || isHovered) {
               finalText = variant == ButtonVariant.primary
-                  ? colors.tokens.colorTextButtonPrimaryActive
-                  : colors.tokens.colorTextButtonNormalActive;
-            } else if (isHovered) {
-              finalText = variant == ButtonVariant.primary
-                  ? colors.tokens.colorTextButtonPrimaryHover
-                  : colors.tokens.colorTextButtonNormalHover;
+                  ? onPrimary
+                  : _applyHover(colorScheme.primary, isDark);
             } else {
               finalText = variant == ButtonVariant.primary
-                  ? colors.tokens.colorTextButtonPrimaryDefault
-                  : colors.tokens.colorTextButtonNormalDefault;
+                  ? onPrimary
+                  : (isDark ? colorScheme.primary : colorScheme.primary);
             }
 
             return CloudscapeButton(
@@ -136,17 +135,6 @@ class CloudscapeButtonDropdown extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (loading) ...[
-                    SizedBox(
-                      width: 14,
-                      height: 14,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        valueColor: AlwaysStoppedAnimation<Color>(finalText),
-                      ),
-                    ),
-                    SizedBox(width: spacing.scaledXs),
-                  ],
                   if (iconName != null && !loading) ...[
                     Icon(iconName, size: 20, color: finalText),
                     SizedBox(width: spacing.scaledXs),
@@ -217,6 +205,21 @@ class CloudscapeButtonDropdown extends StatelessWidget {
       );
     }
     return const SizedBox.shrink();
+  }
+
+  Color _applyHover(Color color, bool isDark) {
+    if (isDark) {
+      return HSVColor.fromColor(color)
+          .withSaturation(
+            (HSVColor.fromColor(color).saturation - 0.1).clamp(0.0, 1.0),
+          )
+          .withValue((HSVColor.fromColor(color).value + 0.1).clamp(0.0, 1.0))
+          .toColor();
+    } else {
+      return HSVColor.fromColor(color)
+          .withValue((HSVColor.fromColor(color).value - 0.1).clamp(0.0, 1.0))
+          .toColor();
+    }
   }
 }
 

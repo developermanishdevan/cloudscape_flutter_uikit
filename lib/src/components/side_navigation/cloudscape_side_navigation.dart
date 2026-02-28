@@ -93,7 +93,7 @@ class CloudscapeSideNavigation extends StatelessWidget {
                     ? CloudscapeTokens.fontWeightButton
                     : typography.bodyM.fontWeight,
                 color: isInteracting
-                    ? colors.tokens.colorTextAccent
+                    ? Theme.of(context).colorScheme.primary
                     : colors.tokens.colorTextBodySecondary,
               );
 
@@ -126,7 +126,7 @@ class CloudscapeSideNavigation extends StatelessWidget {
                                     : Icons.arrow_right,
                                 size: 24,
                                 color: isInteracting
-                                    ? colors.tokens.colorTextAccent
+                                    ? Theme.of(context).colorScheme.primary
                                     : colors.tokens.colorTextBodySecondary,
                               )
                             : null,
