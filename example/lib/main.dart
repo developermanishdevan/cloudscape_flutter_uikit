@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             // fontFamily: "Acme",
           ),
           darkTheme: CloudscapeTheme.dark(
-            // brandColor: const Color.fromARGB(255, 150, 156, 63),
+            // brandColor: const Color.fromARGB(255, 148, 156, 26),
             // onBrandColor: Colors.white,
             // brandBackground: const Color(0xFF0F141A), // Deep Dark background
             // brandText: const Color(0xFFE9EBED), // Light Gray text

@@ -24,25 +24,82 @@ class CloudscapeDynamicColors with Diagnosticable {
   final CloudscapeStatusColors status;
   final CloudscapeChartColors charts;
 
-  factory CloudscapeDynamicColors.light({Color? brandColor}) =>
-      CloudscapeDynamicColors(
-        brightness: Brightness.light,
-        backgrounds: CloudscapeBackgroundColors.light(primary: brandColor),
-        text: CloudscapeTextColors.light(primary: brandColor),
-        borders: CloudscapeBorderColors.light(primary: brandColor),
-        status: CloudscapeStatusColors.light(primary: brandColor),
-        charts: const CloudscapeChartColors.light(),
-      );
+  factory CloudscapeDynamicColors.light({Color? brandColor}) {
+    final Color primary = brandColor ?? CloudscapePalette.blue500;
+    final hsl = HSLColor.fromColor(primary);
 
-  factory CloudscapeDynamicColors.dark({Color? brandColor}) =>
-      CloudscapeDynamicColors(
-        brightness: Brightness.dark,
-        backgrounds: CloudscapeBackgroundColors.dark(primary: brandColor),
-        text: CloudscapeTextColors.dark(primary: brandColor),
-        borders: CloudscapeBorderColors.dark(primary: brandColor),
-        status: CloudscapeStatusColors.dark(primary: brandColor),
-        charts: const CloudscapeChartColors.dark(),
-      );
+    // shades/tints for brand states
+    final primaryHover = hsl
+        .withLightness((hsl.lightness - 0.08).clamp(0.0, 1.0))
+        .toColor();
+    final primaryActive = hsl
+        .withLightness((hsl.lightness - 0.12).clamp(0.0, 1.0))
+        .toColor();
+    final linkHover = hsl
+        .withLightness((hsl.lightness - 0.15).clamp(0.0, 1.0))
+        .toColor();
+
+    // Normal button subtle tints (using opacity for 'reduced' color complexity)
+    final normalHover = primary.withValues(alpha: 0.08);
+    final normalActive = primary.withValues(alpha: 0.15);
+
+    return CloudscapeDynamicColors(
+      brightness: Brightness.light,
+      backgrounds: CloudscapeBackgroundColors.light(
+        primary: primary,
+        primaryHover: primaryHover,
+        primaryActive: primaryActive,
+        normalHover: normalHover,
+        normalActive: normalActive,
+      ),
+      text: CloudscapeTextColors.light(primary: primary, linkHover: linkHover),
+      borders: CloudscapeBorderColors.light(primary: primary),
+      status: CloudscapeStatusColors.light(primary: primary),
+      charts: const CloudscapeChartColors.light(),
+    );
+  }
+
+  factory CloudscapeDynamicColors.dark({Color? brandColor}) {
+    final Color primary = brandColor ?? CloudscapePalette.blue400;
+    final hsl = HSLColor.fromColor(primary);
+
+    // Dark mode hover should feel more vibrant
+    final primaryHover = hsl
+        .withLightness((hsl.lightness + 0.12).clamp(0.0, 1.0))
+        .withSaturation((hsl.saturation + 0.05).clamp(0.0, 1.0))
+        .toColor();
+    final primaryActive = hsl
+        .withLightness((hsl.lightness + 0.05).clamp(0.0, 1.0))
+        .toColor();
+
+    // Branded hover for normal buttons (subtle tint for dark mode)
+    final normalHover = primary.withValues(alpha: 0.12);
+    final normalActive = primary.withValues(alpha: 0.18);
+
+    // Link hover for dark mode (vibrant version of brand primary)
+    final textLinkHover = hsl
+        .withLightness((hsl.lightness + 0.15).clamp(0.0, 1.0))
+        .withSaturation((hsl.saturation + 0.1).clamp(0.0, 1.0))
+        .toColor();
+
+    return CloudscapeDynamicColors(
+      brightness: Brightness.dark,
+      backgrounds: CloudscapeBackgroundColors.dark(
+        primary: primary,
+        primaryHover: primaryHover,
+        primaryActive: primaryActive,
+        normalHover: normalHover,
+        normalActive: normalActive,
+      ),
+      text: CloudscapeTextColors.dark(
+        primary: primary,
+        linkHover: textLinkHover,
+      ),
+      borders: CloudscapeBorderColors.dark(primary: primary),
+      status: CloudscapeStatusColors.dark(primary: primary),
+      charts: const CloudscapeChartColors.dark(),
+    );
+  }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -94,43 +151,53 @@ class CloudscapeBackgroundColors with Diagnosticable {
   final Color buttonPrimaryDisabled;
   final Color dropdownItemHover;
 
-  const CloudscapeBackgroundColors.light({Color? primary})
-    : layoutMain = CloudscapePalette.white,
-      containerContent = CloudscapePalette.white,
-      containerHeader = CloudscapePalette.white,
-      controlDefault = CloudscapePalette.white,
-      controlChecked = primary ?? CloudscapePalette.blue500,
-      controlDisabled = CloudscapePalette.grey300,
-      inputDefault = CloudscapePalette.white,
-      inputDisabled = CloudscapePalette.grey200,
-      buttonNormalDefault = CloudscapePalette.white,
-      buttonNormalHover = CloudscapePalette.blue200,
-      buttonNormalActive = CloudscapePalette.blue300,
-      buttonNormalDisabled = CloudscapePalette.white,
-      buttonPrimaryDefault = primary ?? CloudscapePalette.blue500,
-      buttonPrimaryHover = primary ?? CloudscapePalette.blue850,
-      buttonPrimaryActive = primary ?? CloudscapePalette.blue850,
-      buttonPrimaryDisabled = CloudscapePalette.grey250,
-      dropdownItemHover = CloudscapePalette.grey150;
+  const CloudscapeBackgroundColors.light({
+    Color? primary,
+    Color? primaryHover,
+    Color? primaryActive,
+    Color? normalHover,
+    Color? normalActive,
+  }) : layoutMain = CloudscapePalette.white,
+       containerContent = CloudscapePalette.white,
+       containerHeader = CloudscapePalette.white,
+       controlDefault = CloudscapePalette.white,
+       controlChecked = primary ?? CloudscapePalette.blue500,
+       controlDisabled = CloudscapePalette.grey300,
+       inputDefault = CloudscapePalette.white,
+       inputDisabled = CloudscapePalette.grey200,
+       buttonNormalDefault = CloudscapePalette.white,
+       buttonNormalHover = normalHover ?? CloudscapePalette.blue200,
+       buttonNormalActive = normalActive ?? CloudscapePalette.blue300,
+       buttonNormalDisabled = CloudscapePalette.white,
+       buttonPrimaryDefault = primary ?? CloudscapePalette.blue500,
+       buttonPrimaryHover = primaryHover ?? CloudscapePalette.blue700,
+       buttonPrimaryActive = primaryActive ?? CloudscapePalette.blue800,
+       buttonPrimaryDisabled = CloudscapePalette.grey250,
+       dropdownItemHover = CloudscapePalette.grey150;
 
-  const CloudscapeBackgroundColors.dark({Color? primary})
-    : layoutMain = CloudscapePalette.grey1000,
-      containerContent = CloudscapePalette.grey1000,
-      containerHeader = CloudscapePalette.grey1000,
-      controlDefault = CloudscapePalette.grey1000,
-      controlChecked = primary ?? CloudscapePalette.blue400,
-      controlDisabled = CloudscapePalette.grey700,
-      inputDefault = CloudscapePalette.grey1000,
-      inputDisabled = CloudscapePalette.grey800,
-      buttonNormalDefault = CloudscapePalette.grey1000,
-      buttonNormalHover = CloudscapePalette.grey800,
-      buttonNormalActive = CloudscapePalette.grey700,
-      buttonNormalDisabled = CloudscapePalette.grey1000,
-      buttonPrimaryDefault = primary ?? CloudscapePalette.blue400,
-      buttonPrimaryHover = primary ?? CloudscapePalette.blue300,
-      buttonPrimaryActive = primary ?? CloudscapePalette.blue400,
-      buttonPrimaryDisabled = CloudscapePalette.grey950,
-      dropdownItemHover = CloudscapePalette.grey950;
+  const CloudscapeBackgroundColors.dark({
+    Color? primary,
+    Color? primaryHover,
+    Color? primaryActive,
+    Color? normalHover,
+    Color? normalActive,
+  }) : layoutMain = CloudscapePalette.grey1000,
+       containerContent = CloudscapePalette.grey1000,
+       containerHeader = CloudscapePalette.grey1000,
+       controlDefault = CloudscapePalette.grey1000,
+       controlChecked = primary ?? CloudscapePalette.blue400,
+       controlDisabled = CloudscapePalette.grey700,
+       inputDefault = CloudscapePalette.grey1000,
+       inputDisabled = CloudscapePalette.grey800,
+       buttonNormalDefault = CloudscapePalette.grey1000,
+       buttonNormalHover = normalHover ?? CloudscapePalette.grey800,
+       buttonNormalActive = normalActive ?? CloudscapePalette.grey700,
+       buttonNormalDisabled = CloudscapePalette.grey1000,
+       buttonPrimaryDefault = primary ?? CloudscapePalette.blue400,
+       buttonPrimaryHover = primaryHover ?? CloudscapePalette.blue300,
+       buttonPrimaryActive = primaryActive ?? CloudscapePalette.blue400,
+       buttonPrimaryDisabled = CloudscapePalette.grey950,
+       dropdownItemHover = CloudscapePalette.grey950;
 }
 
 class CloudscapeTextColors with Diagnosticable {
@@ -143,8 +210,14 @@ class CloudscapeTextColors with Diagnosticable {
     required this.linkDefault,
     required this.linkHover,
     required this.onPrimary,
+    required this.onStatusError,
+    required this.onStatusSuccess,
+    required this.onStatusInfo,
+    required this.onStatusWarning,
     required this.interactiveDefault,
     required this.interactiveDisabled,
+    required this.interactiveActive,
+    required this.interactiveHover,
   });
 
   final Color bodyDefault;
@@ -155,32 +228,50 @@ class CloudscapeTextColors with Diagnosticable {
   final Color linkDefault;
   final Color linkHover;
   final Color onPrimary;
+  final Color onStatusError;
+  final Color onStatusSuccess;
+  final Color onStatusInfo;
+  final Color onStatusWarning;
   final Color interactiveDefault;
   final Color interactiveDisabled;
+  final Color interactiveActive;
+  final Color interactiveHover;
 
-  const CloudscapeTextColors.light({Color? primary})
-    : bodyDefault = CloudscapePalette.grey1000,
+  const CloudscapeTextColors.light({Color? primary, Color? linkHover})
+    : bodyDefault = CloudscapePalette.grey800,
       bodySecondary = CloudscapePalette.grey500,
-      headingDefault = CloudscapePalette.grey1000,
+      headingDefault = CloudscapePalette.black,
       headingSecondary = CloudscapePalette.grey500,
       label = CloudscapePalette.grey1000,
       linkDefault = primary ?? CloudscapePalette.blue500,
-      linkHover = primary ?? CloudscapePalette.blue850,
+      linkHover = linkHover ?? primary ?? CloudscapePalette.blue850,
       onPrimary = CloudscapePalette.white,
+      onStatusError = CloudscapePalette.white,
+      onStatusSuccess = CloudscapePalette.white,
+      onStatusInfo = CloudscapePalette.white,
+      onStatusWarning = CloudscapePalette.black,
       interactiveDefault = primary ?? CloudscapePalette.blue500,
-      interactiveDisabled = CloudscapePalette.grey450;
+      interactiveDisabled = CloudscapePalette.grey450,
+      interactiveActive = CloudscapePalette.black,
+      interactiveHover = CloudscapePalette.black;
 
-  const CloudscapeTextColors.dark({Color? primary})
-    : bodyDefault = CloudscapePalette.grey450,
+  const CloudscapeTextColors.dark({Color? primary, Color? linkHover})
+    : bodyDefault = CloudscapePalette.grey250,
       bodySecondary = CloudscapePalette.grey450,
-      headingDefault = CloudscapePalette.grey250,
-      headingSecondary = CloudscapePalette.grey650,
+      headingDefault = CloudscapePalette.white,
+      headingSecondary = CloudscapePalette.grey450,
       label = CloudscapePalette.grey350,
       linkDefault = primary ?? CloudscapePalette.blue400,
-      linkHover = primary ?? CloudscapePalette.blue300,
-      onPrimary = CloudscapePalette.grey1000,
+      linkHover = linkHover ?? primary ?? CloudscapePalette.blue300,
+      onPrimary = CloudscapePalette.white,
+      onStatusError = CloudscapePalette.white,
+      onStatusSuccess = CloudscapePalette.white,
+      onStatusInfo = CloudscapePalette.white,
+      onStatusWarning = CloudscapePalette.black,
       interactiveDefault = primary ?? CloudscapePalette.blue400,
-      interactiveDisabled = CloudscapePalette.grey850;
+      interactiveDisabled = CloudscapePalette.grey550,
+      interactiveActive = CloudscapePalette.white,
+      interactiveHover = CloudscapePalette.white;
 }
 
 class CloudscapeBorderColors with Diagnosticable {
@@ -260,7 +351,7 @@ class CloudscapeStatusColors with Diagnosticable {
       success = CloudscapePalette.green600,
       successBackground = CloudscapePalette.green100,
       successBorder = CloudscapePalette.green600,
-      info = primary ?? CloudscapePalette.blue500,
+      info = CloudscapePalette.blue500,
       infoBackground = CloudscapePalette.blue100,
       infoBorder = CloudscapePalette.blue500,
       warning = CloudscapePalette.orange600,
@@ -274,9 +365,9 @@ class CloudscapeStatusColors with Diagnosticable {
       success = CloudscapePalette.green400,
       successBackground = CloudscapePalette.grey1000,
       successBorder = CloudscapePalette.green400,
-      info = primary ?? CloudscapePalette.blue400,
+      info = CloudscapePalette.blue400,
       infoBackground = CloudscapePalette.blue900,
-      infoBorder = primary ?? CloudscapePalette.blue400,
+      infoBorder = CloudscapePalette.blue400,
       warning = CloudscapePalette.yellow400,
       warningBackground = CloudscapePalette.grey1000,
       warningBorder = CloudscapePalette.yellow400;
