@@ -4,14 +4,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'generated/cloudscape_tokens.dart';
 
 class CloudscapeTypography extends ThemeExtension<CloudscapeTypography> {
-  const CloudscapeTypography();
+  final String fontFamily;
+  final String codeFontFamily;
+
+  const CloudscapeTypography({
+    this.fontFamily = 'Open Sans',
+    this.codeFontFamily = 'Source Code Pro',
+  });
 
   TextStyle _createStyle(
     double fontSize,
     double lineHeight, [
     FontWeight? fontWeight,
   ]) {
-    return GoogleFonts.openSans(
+    return GoogleFonts.getFont(
+      fontFamily,
       fontSize: fontSize,
       fontWeight: fontWeight ?? FontWeight.normal,
       height: lineHeight / fontSize,
@@ -69,13 +76,15 @@ class CloudscapeTypography extends ThemeExtension<CloudscapeTypography> {
   );
 
   // Code styles
-  TextStyle get code => GoogleFonts.sourceCodePro(
+  TextStyle get code => GoogleFonts.getFont(
+    codeFontFamily,
     fontSize: CloudscapeTokens.fontSizeBodyM,
     fontWeight: FontWeight.normal,
     height: CloudscapeTokens.lineHeightBodyM / CloudscapeTokens.fontSizeBodyM,
   );
 
-  TextStyle get codeS => GoogleFonts.sourceCodePro(
+  TextStyle get codeS => GoogleFonts.getFont(
+    codeFontFamily,
     fontSize: CloudscapeTokens.fontSizeBodyS,
     fontWeight: FontWeight.normal,
     height: CloudscapeTokens.lineHeightBodyS / CloudscapeTokens.fontSizeBodyS,
@@ -89,14 +98,22 @@ class CloudscapeTypography extends ThemeExtension<CloudscapeTypography> {
   );
 
   @override
-  ThemeExtension<CloudscapeTypography> copyWith() =>
-      const CloudscapeTypography();
+  ThemeExtension<CloudscapeTypography> copyWith({
+    String? fontFamily,
+    String? codeFontFamily,
+  }) {
+    return CloudscapeTypography(
+      fontFamily: fontFamily ?? this.fontFamily,
+      codeFontFamily: codeFontFamily ?? this.codeFontFamily,
+    );
+  }
 
   @override
   ThemeExtension<CloudscapeTypography> lerp(
     ThemeExtension<CloudscapeTypography>? other,
     double t,
   ) {
-    return this;
+    if (other is! CloudscapeTypography) return this;
+    return t < 0.5 ? this : other;
   }
 }

@@ -8,9 +8,21 @@ import '../tokens/spacing.dart';
 import '../tokens/typography.dart';
 
 class CloudscapeTheme {
-  static ThemeData light() {
+  static ThemeData light({
+    Color? primary,
+    Color? onPrimary,
+    Color? surface,
+    Color? onSurface,
+    Color? error,
+    Color? onError,
+    String? fontFamily,
+    String? codeFontFamily,
+  }) {
     final colors = CloudscapeColors.light();
-    final typography = const CloudscapeTypography();
+    final typography = CloudscapeTypography(
+      fontFamily: fontFamily ?? 'Open Sans',
+      codeFontFamily: codeFontFamily ?? 'Source Code Pro',
+    );
     final spacing = const CloudscapeSpacing();
     final radius = const CloudscapeRadius();
     final borderWidth = const CloudscapeBorderWidth();
@@ -20,21 +32,34 @@ class CloudscapeTheme {
       useMaterial3: true,
       brightness: Brightness.light,
       colorScheme: ColorScheme.light(
-        primary: colors.tokens.colorBackgroundButtonPrimaryDefault,
-        onPrimary: colors.tokens.colorTextButtonPrimaryDefault,
-        surface: colors.tokens.colorBackgroundLayoutMain,
-        onSurface: colors.tokens.colorTextBodyDefault,
-        error: colors.tokens.colorBackgroundStatusError,
-        onError: colors.tokens.colorTextStatusError,
+        primary: primary ?? colors.tokens.colorBackgroundButtonPrimaryDefault,
+        onPrimary: onPrimary ?? colors.tokens.colorTextButtonPrimaryDefault,
+        surface: surface ?? colors.tokens.colorBackgroundLayoutMain,
+        onSurface: onSurface ?? colors.tokens.colorTextBodyDefault,
+        error: error ?? colors.tokens.colorBackgroundStatusError,
+        onError: onError ?? colors.tokens.colorTextStatusError,
       ),
-      scaffoldBackgroundColor: colors.tokens.colorBackgroundLayoutMain,
+      scaffoldBackgroundColor:
+          surface ?? colors.tokens.colorBackgroundLayoutMain,
       extensions: [colors, typography, spacing, radius, borderWidth, motion],
     );
   }
 
-  static ThemeData dark() {
+  static ThemeData dark({
+    Color? primary,
+    Color? onPrimary,
+    Color? surface,
+    Color? onSurface,
+    Color? error,
+    Color? onError,
+    String? fontFamily,
+    String? codeFontFamily,
+  }) {
     final colors = CloudscapeColors.dark();
-    final typography = const CloudscapeTypography();
+    final typography = CloudscapeTypography(
+      fontFamily: fontFamily ?? 'Open Sans',
+      codeFontFamily: codeFontFamily ?? 'Source Code Pro',
+    );
     final spacing = const CloudscapeSpacing();
     final radius = const CloudscapeRadius();
     final borderWidth = const CloudscapeBorderWidth();
@@ -44,14 +69,15 @@ class CloudscapeTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       colorScheme: ColorScheme.dark(
-        primary: colors.tokens.colorBackgroundButtonPrimaryDefault,
-        onPrimary: colors.tokens.colorTextButtonPrimaryDefault,
-        surface: colors.tokens.colorBackgroundLayoutMain,
-        onSurface: colors.tokens.colorTextBodyDefault,
-        error: colors.tokens.colorBackgroundStatusError,
-        onError: colors.tokens.colorTextStatusError,
+        primary: primary ?? colors.tokens.colorBackgroundButtonPrimaryDefault,
+        onPrimary: onPrimary ?? colors.tokens.colorTextButtonPrimaryDefault,
+        surface: surface ?? colors.tokens.colorBackgroundLayoutMain,
+        onSurface: onSurface ?? colors.tokens.colorTextBodyDefault,
+        error: error ?? colors.tokens.colorBackgroundStatusError,
+        onError: onError ?? colors.tokens.colorTextStatusError,
       ),
-      scaffoldBackgroundColor: colors.tokens.colorBackgroundLayoutMain,
+      scaffoldBackgroundColor:
+          surface ?? colors.tokens.colorBackgroundLayoutMain,
       extensions: [colors, typography, spacing, radius, borderWidth, motion],
     );
   }
