@@ -88,9 +88,68 @@ class UiKitExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = CloudscapeThemeExtension.of(context);
+
     return Scaffold(
-      body: Center(
-        child: Text('Hello World', style: CloudscapeTypography.headingXL),
+      appBar: AppBar(
+        title: const Text('Cloudscape Card Showcase'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(CloudscapeSpacing.large),
+        child: Wrap(
+          spacing: CloudscapeSpacing.medium,
+          runSpacing: CloudscapeSpacing.medium,
+          children: [
+            // Card that looks like the User's provided image (Alert demo)
+            SizedBox(
+              width: 400,
+              child: CloudscapeCard(
+                header: Container(
+                  height: 50,
+                  color: Colors
+                      .transparent, // Let parent handle the background color
+                  child: Center(
+                    child: Text(
+                      'Card header',
+                      style: CloudscapeTypography.bodyM.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: theme.colors.textHeadingDefault,
+                      ),
+                    ),
+                  ),
+                ),
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'A brief message that provides information or instructs users to take a specific action.',
+                      style: CloudscapeTypography.bodyM.copyWith(
+                        color: theme.colors.textBodyDefault,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Simple Card Example
+            const SizedBox(
+              width: 300,
+              child: CloudscapeCard(
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Simple Card Content'),
+                    SizedBox(height: 8),
+                    Text('This is a card without a header section.'),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -16,3 +16,4 @@ export 'src/foundation/accessibility/accessibility_utils.dart';
 
 // Components
 export 'src/components/base/component_base.dart';
+export 'src/components/card/cloudscape_card.dart';
