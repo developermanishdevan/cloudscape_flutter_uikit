@@ -137,6 +137,15 @@ class _UiKitExampleState extends State<UiKitExample> {
     ),
   ];
 
+  // Breadcrumb Group State
+  String _activeBreadcrumb = 'breadcrumb-group';
+
+  final List<BreadcrumbItem> _breadcrumbItems = const [
+    BreadcrumbItem(text: 'Home', href: 'home'),
+    BreadcrumbItem(text: 'Components', href: 'components'),
+    BreadcrumbItem(text: 'Breadcrumb group', href: 'breadcrumb-group'),
+  ];
+
   // Handlers
   void _resetConfig() {
     setState(() {
@@ -531,6 +540,39 @@ class _UiKitExampleState extends State<UiKitExample> {
                     ),
                   ),
                 ],
+              ),
+            ),
+
+            // Breadcrumb Group Showcase
+            SizedBox(
+              width: 500,
+              child: CloudscapeBox(
+                header: Container(
+                  height: 50,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: spacing.scaledM),
+                  child: Text('Breadcrumb Group', style: typography.headingL),
+                ),
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Default', style: typography.headingS),
+                    SizedBox(height: spacing.scaledXxs),
+                    CloudscapeBreadcrumbGroup(
+                      items: _breadcrumbItems,
+                      onFollow: (item) {
+                        setState(() {
+                          _activeBreadcrumb = item.href;
+                        });
+                      },
+                    ),
+                    SizedBox(height: spacing.scaledM),
+                    Text(
+                      'Active breadcrumb: $_activeBreadcrumb',
+                      style: typography.bodyS,
+                    ),
+                  ],
+                ),
               ),
             ),
 
