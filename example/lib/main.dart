@@ -137,6 +137,13 @@ class _UiKitExampleState extends State<UiKitExample> {
     ),
   ];
 
+  // Button Configurator State
+  bool _btnDisabled = false;
+  bool _btnLoading = false;
+  bool _btnFullWidth = false;
+  bool _btnWrapText = true;
+  bool _btnExternal = false;
+
   // Breadcrumb Group State
   String _activeBreadcrumb = 'breadcrumb-group';
 
@@ -570,6 +577,111 @@ class _UiKitExampleState extends State<UiKitExample> {
                     Text(
                       'Active breadcrumb: $_activeBreadcrumb',
                       style: typography.bodyS,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Button Showcase
+            SizedBox(
+              width: 500,
+              child: CloudscapeBox(
+                header: Container(
+                  height: 50,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.symmetric(horizontal: spacing.scaledM),
+                  child: Text('Button Showcase', style: typography.headingL),
+                ),
+                body: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Examples', style: typography.headingM),
+                    SizedBox(height: spacing.scaledS),
+                    Wrap(
+                      spacing: spacing.scaledS,
+                      runSpacing: spacing.scaledS,
+                      children: [
+                        CloudscapeButton(
+                          text: 'Primary button',
+                          variant: ButtonVariant.primary,
+                          disabled: _btnDisabled,
+                          loading: _btnLoading,
+                          fullWidth: _btnFullWidth,
+                          wrapText: _btnWrapText,
+                          external: _btnExternal,
+                          onPressed: () {},
+                        ),
+                        CloudscapeButton(
+                          text: 'Normal button',
+                          variant: ButtonVariant.normal,
+                          disabled: _btnDisabled,
+                          loading: _btnLoading,
+                          fullWidth: _btnFullWidth,
+                          wrapText: _btnWrapText,
+                          external: _btnExternal,
+                          onPressed: () {},
+                        ),
+                        CloudscapeButton(
+                          text: 'Link button',
+                          variant: ButtonVariant.link,
+                          disabled: _btnDisabled,
+                          loading: _btnLoading,
+                          fullWidth: _btnFullWidth,
+                          wrapText: _btnWrapText,
+                          external: _btnExternal,
+                          onPressed: () {},
+                        ),
+                        CloudscapeButton(
+                          variant: ButtonVariant.icon,
+                          iconName: Icons.settings,
+                          disabled: _btnDisabled,
+                          loading: _btnLoading,
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                    const Divider(height: 32),
+                    Text('Configuration', style: typography.headingM),
+                    SizedBox(height: spacing.scaledS),
+                    Column(
+                      children: [
+                        CheckboxListTile(
+                          title: const Text('disabled'),
+                          value: _btnDisabled,
+                          onChanged: (v) => setState(() => _btnDisabled = v!),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                        ),
+                        CheckboxListTile(
+                          title: const Text('loading'),
+                          value: _btnLoading,
+                          onChanged: (v) => setState(() => _btnLoading = v!),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                        ),
+                        CheckboxListTile(
+                          title: const Text('fullWidth'),
+                          value: _btnFullWidth,
+                          onChanged: (v) => setState(() => _btnFullWidth = v!),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                        ),
+                        CheckboxListTile(
+                          title: const Text('wrapText'),
+                          value: _btnWrapText,
+                          onChanged: (v) => setState(() => _btnWrapText = v!),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                        ),
+                        CheckboxListTile(
+                          title: const Text('external'),
+                          value: _btnExternal,
+                          onChanged: (v) => setState(() => _btnExternal = v!),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                        ),
+                      ],
                     ),
                   ],
                 ),
