@@ -9,16 +9,15 @@ import '../tokens/typography.dart';
 
 class CloudscapeTheme {
   static ThemeData light({
-    Color? primary,
-    Color? onPrimary,
-    Color? surface,
-    Color? onSurface,
-    Color? error,
-    Color? onError,
+    Color? brandColor,
+    Color? onBrandColor,
+    Color? brandBackground,
+    Color? brandText,
     String? fontFamily,
     String? codeFontFamily,
   }) {
-    final colors = CloudscapeColors.light();
+    final extension = CloudscapeColors.light(brandColor: brandColor);
+
     final typography = CloudscapeTypography(
       fontFamily: fontFamily ?? 'Open Sans',
       codeFontFamily: codeFontFamily ?? 'Source Code Pro',
@@ -32,30 +31,27 @@ class CloudscapeTheme {
       useMaterial3: true,
       brightness: Brightness.light,
       colorScheme: ColorScheme.light(
-        primary: primary ?? colors.tokens.colorBackgroundButtonPrimaryDefault,
-        onPrimary: onPrimary ?? colors.tokens.colorTextButtonPrimaryDefault,
-        surface: surface ?? colors.tokens.colorBackgroundLayoutMain,
-        onSurface: onSurface ?? colors.tokens.colorTextBodyDefault,
-        error: error ?? colors.tokens.colorBackgroundStatusError,
-        onError: onError ?? colors.tokens.colorTextStatusError,
+        primary: brandColor ?? extension.backgrounds.controlChecked,
+        onPrimary: onBrandColor ?? extension.text.onPrimary,
+        surface: brandBackground ?? extension.backgrounds.layoutMain,
+        onSurface: brandText ?? extension.text.bodyDefault,
       ),
       scaffoldBackgroundColor:
-          surface ?? colors.tokens.colorBackgroundLayoutMain,
-      extensions: [colors, typography, spacing, radius, borderWidth, motion],
+          brandBackground ?? extension.backgrounds.layoutMain,
+      extensions: [extension, typography, spacing, radius, borderWidth, motion],
     );
   }
 
   static ThemeData dark({
-    Color? primary,
-    Color? onPrimary,
-    Color? surface,
-    Color? onSurface,
-    Color? error,
-    Color? onError,
+    Color? brandColor,
+    Color? onBrandColor,
+    Color? brandBackground,
+    Color? brandText,
     String? fontFamily,
     String? codeFontFamily,
   }) {
-    final colors = CloudscapeColors.dark();
+    final extension = CloudscapeColors.dark(brandColor: brandColor);
+
     final typography = CloudscapeTypography(
       fontFamily: fontFamily ?? 'Open Sans',
       codeFontFamily: codeFontFamily ?? 'Source Code Pro',
@@ -69,23 +65,23 @@ class CloudscapeTheme {
       useMaterial3: true,
       brightness: Brightness.dark,
       colorScheme: ColorScheme.dark(
-        primary: primary ?? colors.tokens.colorBackgroundButtonPrimaryDefault,
-        onPrimary: onPrimary ?? colors.tokens.colorTextButtonPrimaryDefault,
-        surface: surface ?? colors.tokens.colorBackgroundLayoutMain,
-        onSurface: onSurface ?? colors.tokens.colorTextBodyDefault,
-        error: error ?? colors.tokens.colorBackgroundStatusError,
-        onError: onError ?? colors.tokens.colorTextStatusError,
+        primary: brandColor ?? extension.backgrounds.controlChecked,
+        onPrimary: onBrandColor ?? extension.text.onPrimary,
+        surface: brandBackground ?? extension.backgrounds.layoutMain,
+        onSurface: brandText ?? extension.text.bodyDefault,
       ),
       scaffoldBackgroundColor:
-          surface ?? colors.tokens.colorBackgroundLayoutMain,
-      extensions: [colors, typography, spacing, radius, borderWidth, motion],
+          brandBackground ?? extension.backgrounds.layoutMain,
+      extensions: [extension, typography, spacing, radius, borderWidth, motion],
     );
   }
 }
 
 extension CloudscapeThemeContext on BuildContext {
+  /// Access to the Cloudscape Theme Extension colors.
   CloudscapeColors get cloudscapeColors =>
       Theme.of(this).extension<CloudscapeColors>()!;
+
   CloudscapeTypography get cloudscapeTypography =>
       Theme.of(this).extension<CloudscapeTypography>()!;
   CloudscapeSpacing get cloudscapeSpacing =>

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/theme/cloudscape_theme.dart';
-import '../../foundation/tokens/generated/cloudscape_tokens.dart';
 import '../base/component_base.dart';
 
 /// Represents a single navigation anchor.
@@ -68,7 +67,7 @@ class CloudscapeAnchorNavigation extends StatelessWidget {
             child: Container(
               width: 2,
               decoration: BoxDecoration(
-                color: colors.tokens.colorBorderDividerDefault,
+                color: colors.borders.dividerDefault,
                 borderRadius: BorderRadius.circular(radius.tabsFocusRing),
               ),
             ),
@@ -134,7 +133,7 @@ class _AnchorItemWidget extends StatelessWidget {
               child: Container(
                 width: 2,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary,
+                  color: colors.backgrounds.controlChecked,
                   borderRadius: BorderRadius.circular(radius.tabsFocusRing),
                 ),
               ),
@@ -145,11 +144,12 @@ class _AnchorItemWidget extends StatelessWidget {
 
               final textStyle = typography.bodyM.copyWith(
                 fontWeight: isActive
-                    ? CloudscapeTokens.fontWeightButton
+                    ? FontWeight
+                          .w700 // CloudscapeTokens.fontWeightButton (usually bold)
                     : typography.bodyM.fontWeight,
                 color: isInteracting
-                    ? Theme.of(context).colorScheme.primary
-                    : colors.tokens.colorTextBodySecondary,
+                    ? colors.backgrounds.controlChecked
+                    : colors.text.bodySecondary,
               );
 
               final double calculatedLeftPadding = (anchor.level * 16.0) + 2.0;
@@ -175,7 +175,7 @@ class _AnchorItemWidget extends StatelessWidget {
                               anchor.info!,
                               style: typography.bodyS.copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: Theme.of(context).colorScheme.primary,
+                                color: colors.backgrounds.controlChecked,
                               ),
                             ),
                           ],

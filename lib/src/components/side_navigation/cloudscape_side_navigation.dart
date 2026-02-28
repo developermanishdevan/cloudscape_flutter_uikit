@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../foundation/theme/cloudscape_theme.dart';
-import '../../foundation/tokens/generated/cloudscape_tokens.dart';
 import '../base/component_base.dart';
 
 /// Represents a single item in the side navigation.
@@ -90,11 +89,12 @@ class CloudscapeSideNavigation extends StatelessWidget {
 
               final textStyle = typography.bodyM.copyWith(
                 fontWeight: isActive
-                    ? CloudscapeTokens.fontWeightButton
+                    ? FontWeight
+                          .w700 // Bold for active
                     : typography.bodyM.fontWeight,
                 color: isInteracting
-                    ? Theme.of(context).colorScheme.primary
-                    : colors.tokens.colorTextBodySecondary,
+                    ? colors.backgrounds.controlChecked
+                    : colors.text.bodySecondary,
               );
 
               return GestureDetector(
@@ -126,8 +126,8 @@ class CloudscapeSideNavigation extends StatelessWidget {
                                     : Icons.arrow_right,
                                 size: 24,
                                 color: isInteracting
-                                    ? Theme.of(context).colorScheme.primary
-                                    : colors.tokens.colorTextBodySecondary,
+                                    ? colors.backgrounds.controlChecked
+                                    : colors.text.bodySecondary,
                               )
                             : null,
                       ),

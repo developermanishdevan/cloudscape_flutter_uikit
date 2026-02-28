@@ -49,7 +49,7 @@ class CloudscapeAlert extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!visible) return const SizedBox.shrink();
 
-    final colorTokens = context.cloudscapeColors;
+    final colors = context.cloudscapeColors;
     final typography = context.cloudscapeTypography;
     final spacing = context.cloudscapeSpacing;
     final radius = context.cloudscapeRadius;
@@ -62,27 +62,27 @@ class CloudscapeAlert extends StatelessWidget {
 
     switch (type) {
       case AlertType.success:
-        backgroundColor = colorTokens.tokens.colorBackgroundStatusSuccess;
-        borderColor = colorTokens.tokens.colorBorderStatusSuccess;
-        iconColor = colorTokens.tokens.colorTextStatusSuccess;
+        backgroundColor = colors.status.successBackground;
+        borderColor = colors.status.successBorder;
+        iconColor = colors.status.success;
         iconData = Icons.check_circle_outline_rounded;
         break;
       case AlertType.error:
-        backgroundColor = colorTokens.tokens.colorBackgroundStatusError;
-        borderColor = colorTokens.tokens.colorBorderStatusError;
-        iconColor = colorTokens.tokens.colorTextStatusError;
+        backgroundColor = colors.status.errorBackground;
+        borderColor = colors.status.errorBorder;
+        iconColor = colors.status.error;
         iconData = Icons.error_outline_rounded;
         break;
       case AlertType.warning:
-        backgroundColor = colorTokens.tokens.colorBackgroundStatusWarning;
-        borderColor = colorTokens.tokens.colorBorderStatusWarning;
-        iconColor = colorTokens.tokens.colorTextStatusWarning;
+        backgroundColor = colors.status.warningBackground;
+        borderColor = colors.status.warningBorder;
+        iconColor = colors.status.warning;
         iconData = Icons.warning_amber_rounded;
         break;
       case AlertType.info:
-        backgroundColor = colorTokens.tokens.colorBackgroundStatusInfo;
-        borderColor = colorTokens.tokens.colorBorderStatusInfo;
-        iconColor = colorTokens.tokens.colorTextStatusInfo;
+        backgroundColor = colors.status.infoBackground;
+        borderColor = colors.status.infoBorder;
+        iconColor = colors.status.info;
         iconData = Icons.info_outline_rounded;
         break;
     }
@@ -105,9 +105,7 @@ class CloudscapeAlert extends StatelessWidget {
             child: Icon(
               iconData,
               color: iconColor,
-              size: typography
-                  .headingS
-                  .fontSize, // Standard normal icon size around 16px
+              size: typography.headingS.fontSize,
             ),
           ),
           SizedBox(width: spacing.scaledS),
@@ -120,14 +118,14 @@ class CloudscapeAlert extends StatelessWidget {
                   DefaultTextStyle(
                     style: typography.bodyM.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: colorTokens.tokens.colorTextBodyDefault,
+                      color: colors.text.bodyDefault,
                     ),
                     child: header!,
                   ),
                 if (header != null) SizedBox(height: spacing.scaledXxs),
                 DefaultTextStyle(
                   style: typography.bodyM.copyWith(
-                    color: colorTokens.tokens.colorTextBodyDefault,
+                    color: colors.text.bodyDefault,
                   ),
                   child: child,
                 ),
@@ -170,7 +168,7 @@ class _AlertDismissButton extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: isHovered
-                  ? colors.tokens.colorBackgroundButtonNormalHover
+                  ? colors.backgrounds.buttonNormalHover
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(radius.button),
             ),
@@ -178,7 +176,7 @@ class _AlertDismissButton extends StatelessWidget {
             child: Icon(
               Icons.close_rounded,
               size: typography.headingS.fontSize,
-              color: colors.tokens.colorTextBodyDefault,
+              color: colors.text.bodyDefault,
             ),
           ),
         );

@@ -55,17 +55,18 @@ class CloudscapeBox extends StatelessWidget {
           onTap: onTap,
           child: Container(
             decoration: BoxDecoration(
-              color: colors.tokens.colorBackgroundContainerContent,
+              color: colors.backgrounds.containerContent,
               borderRadius: effectiveBorderRadius,
               border: Border.all(
-                color: colors.tokens.colorBorderDividerDefault,
+                color: colors.borders.dividerDefault,
                 width: borderWidth.container,
               ),
               boxShadow: isHovered && onTap != null
                   ? [
                       BoxShadow(
-                        color: colors.tokens.colorBorderDividerDefault
-                            .withValues(alpha: 0.3),
+                        color: colors.borders.dividerDefault.withValues(
+                          alpha: 0.3,
+                        ),
                         blurRadius: 8,
                         offset: const Offset(0, 4),
                       ),
@@ -84,14 +85,14 @@ class CloudscapeBox extends StatelessWidget {
                 children: [
                   if (header != null) ...[
                     Container(
-                      color: colors.tokens.colorBackgroundContainerHeader,
+                      color: colors.backgrounds.containerHeader,
                       padding: headerPadding ?? defaultPadding,
                       child: header,
                     ),
                     Divider(
                       height: 1,
                       thickness: 1,
-                      color: colors.tokens.colorBorderDividerSecondary,
+                      color: colors.borders.dividerSecondary,
                     ),
                   ],
                   Padding(padding: bodyPadding ?? defaultPadding, child: body),

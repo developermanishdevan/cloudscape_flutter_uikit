@@ -101,31 +101,47 @@ class CloudscapeDropdownBaseState extends State<CloudscapeDropdownBase> {
               link: _layerLink,
               showWhenUnlinked: false,
               offset: Offset(0.0, size.height + widget.verticalOffset),
-              child: Material(
-                elevation: 6, // Slightly higher elevation for better visibility
-                borderRadius: BorderRadius.circular(8),
-                color: context
-                    .cloudscapeColors
-                    .tokens
-                    .colorBackgroundContainerContent,
-                shadowColor: Colors.black.withAlpha(51),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: context
-                          .cloudscapeColors
-                          .tokens
-                          .colorBorderDropdownContainer,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    context.cloudscapeRadius.dropdown,
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxHeight: widget.maxHeight),
-                      child: SingleChildScrollView(
-                        child: widget.dropdownBuilder(context, size, close),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: Material(
+                  borderRadius: BorderRadius.circular(
+                    context.cloudscapeRadius.dropdown,
+                  ),
+                  color: context.cloudscapeColors.backgrounds.containerContent,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color:
+                            context.cloudscapeColors.borders.dropdownContainer,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(
+                        context.cloudscapeRadius.dropdown,
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                        context.cloudscapeRadius.dropdown,
+                      ),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: widget.maxHeight,
+                        ),
+                        child: SingleChildScrollView(
+                          child: widget.dropdownBuilder(context, size, close),
+                        ),
                       ),
                     ),
                   ),

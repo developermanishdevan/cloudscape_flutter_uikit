@@ -28,7 +28,7 @@ class CloudscapeBreadcrumbGroup extends StatelessWidget {
 
   const CloudscapeBreadcrumbGroup({
     super.key,
-    required this.items,
+    this.items = const [],
     this.onFollow,
     this.ariaLabel,
   });
@@ -66,7 +66,7 @@ class CloudscapeBreadcrumbGroup extends StatelessWidget {
             child: Icon(
               Icons.chevron_right,
               size: 20,
-              color: colors.tokens.colorTextBreadcrumbIcon,
+              color: colors.text.bodySecondary,
             ),
           ),
         );
@@ -96,9 +96,7 @@ class _BreadcrumbItemWidget extends StatelessWidget {
     if (isLast) {
       return Text(
         item.text,
-        style: typography.bodyM.copyWith(
-          color: colors.tokens.colorTextBreadcrumbCurrent,
-        ),
+        style: typography.bodyM.copyWith(color: colors.text.bodyDefault),
       );
     }
 
@@ -111,39 +109,18 @@ class _BreadcrumbItemWidget extends StatelessWidget {
             item.text,
             style: typography.bodyM.copyWith(
               color: isHovered
-                  ? _applyHover(
-                      Theme.of(context).colorScheme.primary,
-                      Theme.of(context).brightness == Brightness.dark,
-                    )
-                  : Theme.of(context).colorScheme.primary,
+                  ? colors.text.linkHover
+                  : colors.text.linkDefault,
               decoration: isHovered
                   ? TextDecoration.underline
                   : TextDecoration.none,
               decorationColor: isHovered
-                  ? _applyHover(
-                      Theme.of(context).colorScheme.primary,
-                      Theme.of(context).brightness == Brightness.dark,
-                    )
-                  : Theme.of(context).colorScheme.primary,
+                  ? colors.text.linkHover
+                  : colors.text.linkDefault,
             ),
           ),
         );
       },
     );
-  }
-
-  Color _applyHover(Color color, bool isDark) {
-    if (isDark) {
-      return HSVColor.fromColor(color)
-          .withSaturation(
-            (HSVColor.fromColor(color).saturation - 0.1).clamp(0.0, 1.0),
-          )
-          .withValue((HSVColor.fromColor(color).value + 0.1).clamp(0.0, 1.0))
-          .toColor();
-    } else {
-      return HSVColor.fromColor(color)
-          .withValue((HSVColor.fromColor(color).value - 0.1).clamp(0.0, 1.0))
-          .toColor();
-    }
   }
 }

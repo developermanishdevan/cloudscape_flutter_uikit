@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../foundation/theme/cloudscape_theme.dart';
-import '../../foundation/tokens/generated/cloudscape_tokens.dart';
 import '../base/cloudscape_dropdown_base.dart';
 import '../base/component_base.dart';
 import '../button/cloudscape_button.dart';
@@ -99,24 +98,18 @@ class CloudscapeButtonDropdown extends StatelessWidget {
           enabled: !disabled && !loading,
           isButton: true,
           builder: (context, isHovered) {
-            final theme = Theme.of(context);
-            final colorScheme = theme.colorScheme;
-            final bool isDark = theme.brightness == Brightness.dark;
-            final Color onPrimary = colorScheme.onPrimary;
             final Color finalText;
 
             if (disabled) {
-              finalText = variant == ButtonVariant.primary
-                  ? colors.tokens.colorTextButtonPrimaryDisabled
-                  : colors.tokens.colorTextButtonNormalDisabled;
+              finalText = colors.text.interactiveDisabled;
             } else if (isOpened || isHovered) {
               finalText = variant == ButtonVariant.primary
-                  ? onPrimary
-                  : _applyHover(colorScheme.primary, isDark);
+                  ? colors.text.onPrimary
+                  : colors.text.linkHover;
             } else {
               finalText = variant == ButtonVariant.primary
-                  ? onPrimary
-                  : (isDark ? colorScheme.primary : colorScheme.primary);
+                  ? colors.text.onPrimary
+                  : colors.backgrounds.controlChecked;
             }
 
             return CloudscapeButton(
@@ -145,17 +138,19 @@ class CloudscapeButtonDropdown extends StatelessWidget {
                             text!,
                             style: typography.bodyM.copyWith(
                               color: finalText,
-                              fontWeight: CloudscapeTokens.fontWeightButton,
+                              fontWeight: FontWeight.w600,
                               overflow: TextOverflow.ellipsis,
                             ),
                             textAlign: TextAlign.center,
                           )
                         : const SizedBox.shrink(),
                   ),
-                  SizedBox(width: spacing.scaledXs),
+                  SizedBox(width: spacing.scaledXxs),
                   Icon(
-                    isOpened ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                    size: 20,
+                    isOpened
+                        ? Icons.keyboard_arrow_up
+                        : Icons.keyboard_arrow_down,
+                    size: 16,
                     color: finalText,
                   ),
                 ],
@@ -206,21 +201,6 @@ class CloudscapeButtonDropdown extends StatelessWidget {
     }
     return const SizedBox.shrink();
   }
-
-  Color _applyHover(Color color, bool isDark) {
-    if (isDark) {
-      return HSVColor.fromColor(color)
-          .withSaturation(
-            (HSVColor.fromColor(color).saturation - 0.1).clamp(0.0, 1.0),
-          )
-          .withValue((HSVColor.fromColor(color).value + 0.1).clamp(0.0, 1.0))
-          .toColor();
-    } else {
-      return HSVColor.fromColor(color)
-          .withValue((HSVColor.fromColor(color).value - 0.1).clamp(0.0, 1.0))
-          .toColor();
-    }
-  }
 }
 
 class _DropdownItemWidget extends StatelessWidget {
@@ -243,57 +223,47 @@ class _DropdownItemWidget extends StatelessWidget {
     return ComponentsBase(
       enabled: !item.disabled,
       builder: (context, isHovered) {
+        final Color textColor = item.disabled
+            ? colors.text.interactiveDisabled
+            : colors.text.bodyDefault;
+
         return GestureDetector(
           onTap: item.disabled ? null : onTap,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 1),
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
             child: Container(
               padding: EdgeInsets.symmetric(
-                horizontal: spacing.scaledS + (level * 16),
-                vertical: spacing.scaledS - 2,
+                horizontal: spacing.scaledS + (level * 12) - 1,
+                vertical: spacing.scaledXs - 1,
               ),
               decoration: BoxDecoration(
                 color: isHovered
-                    ? colors.tokens.colorBackgroundDropdownItemHover
+                    ? colors.backgrounds.dropdownItemHover
                     : Colors.transparent,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(
+                  context.cloudscapeRadius.item,
+                ),
+                border: Border.all(
+                  color: isHovered
+                      ? colors.borders.dropdownItemHover
+                      : Colors.transparent,
+                  width: 1,
+                ),
               ),
               child: Row(
                 children: [
                   if (item.iconName != null) ...[
-                    Icon(
-                      item.iconName,
-                      size: 20,
-                      color: item.disabled
-                          ? colors.tokens.colorTextDropdownItemDisabled
-                          : colors.tokens.colorTextBodyDefault,
-                    ),
+                    Icon(item.iconName, size: 20, color: textColor),
                     const SizedBox(width: 8),
                   ],
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item.text,
-                          style: typography.bodyM.copyWith(
-                            color: item.disabled
-                                ? colors.tokens.colorTextDropdownItemDisabled
-                                : colors.tokens.colorTextBodyDefault,
-                            fontWeight: isHovered
-                                ? FontWeight.w600
-                                : FontWeight.normal,
-                          ),
-                        ),
-                        if (item.disabled && item.disabledReason != null)
-                          Text(
-                            item.disabledReason!,
-                            style: typography.bodyS.copyWith(
-                              color:
-                                  colors.tokens.colorTextDropdownItemDisabled,
-                            ),
-                          ),
-                      ],
+                    child: Text(
+                      item.text,
+                      style: typography.bodyM.copyWith(
+                        color: textColor,
+                        fontWeight:
+                            FontWeight.w400, // Standard weight from image
+                      ),
                     ),
                   ),
                   if (item.external) ...[
@@ -301,7 +271,7 @@ class _DropdownItemWidget extends StatelessWidget {
                     Icon(
                       Icons.open_in_new,
                       size: 16,
-                      color: colors.tokens.colorTextDropdownItemDisabled,
+                      color: colors.text.interactiveDisabled,
                     ),
                   ],
                 ],
@@ -363,13 +333,13 @@ class _DropdownGroupWidgetState extends State<_DropdownGroupWidget> {
                   Icon(
                     _expanded ? Icons.arrow_drop_down : Icons.arrow_right,
                     size: 20,
-                    color: colors.tokens.colorTextInteractiveDisabled,
+                    color: colors.text.interactiveDisabled,
                   ),
                   const SizedBox(width: 4),
                   Text(
                     widget.group.text,
                     style: typography.headingXs.copyWith(
-                      color: colors.tokens.colorTextInteractiveDisabled,
+                      color: colors.text.interactiveDisabled,
                     ),
                   ),
                 ],
@@ -386,7 +356,7 @@ class _DropdownGroupWidgetState extends State<_DropdownGroupWidget> {
             child: Text(
               widget.group.text.toUpperCase(),
               style: typography.label.copyWith(
-                color: colors.tokens.colorTextInteractiveDisabled,
+                color: colors.text.interactiveDisabled,
                 letterSpacing: 1.2,
                 fontSize: 11,
               ),

@@ -21,21 +21,17 @@ class MyApp extends StatelessWidget {
           // Sample Theme Values:
           // You can customize colors and fonts dynamicly.
           theme: CloudscapeTheme.light(
-            // primary: const Color.fromARGB(255, 148, 156, 26), // Brand Green
-            // onPrimary: Colors.white,
-            // surface: const Color(0xFFF2F3F5), // Light Gray background
-            // onSurface: const Color(0xFF16191F), // Dark Gray text
-            // error: const Color(0xFFD91515), // Error Red
-            // onError: Colors.white,
+            // brandColor: const Color.fromARGB(255, 148, 156, 26), // Brand Green
+            // onBrandColor: Colors.white,
+            // brandBackground: const Color(0xFFF2F3F5), // Light Gray background
+            // brandText: const Color(0xFF16191F), // Dark Gray text
             // fontFamily: "Acme",
           ),
           darkTheme: CloudscapeTheme.dark(
-            // primary: const Color.fromARGB(255, 150, 156, 63),
-            // onPrimary: Colors.white,
-            // surface: const Color(0xFF0F141A), // Deep Dark background
-            // onSurface: const Color(0xFFE9EBED), // Light Gray text
-            // error: const Color(0xFFD13212), // Darker Error Red
-            // onError: Colors.white,
+            // brandColor: const Color.fromARGB(255, 150, 156, 63),
+            // onBrandColor: Colors.white,
+            // brandBackground: const Color(0xFF0F141A), // Deep Dark background
+            // brandText: const Color(0xFFE9EBED), // Light Gray text
             // fontFamily: "Acme",
           ),
           debugShowCheckedModeBanner: false,
@@ -81,10 +77,7 @@ class ThemeControllerWrapper extends StatelessWidget {
             child: FloatingActionButton(
               mini: true,
               backgroundColor: isDarkMode
-                  ? context
-                        .cloudscapeColors
-                        .tokens
-                        .colorBackgroundContainerContent
+                  ? context.cloudscapeColors.backgrounds.containerContent
                   : Colors.white,
               elevation: 4,
               shape: const CircleBorder(),
@@ -160,22 +153,19 @@ class _UiKitExampleState extends State<UiKitExample> {
   bool _bddExpandable = false;
 
   final List<ButtonDropdownItemOrGroup> _bddItems = [
-    const ButtonDropdownItem(id: 'id1', text: 'Action 1'),
-    const ButtonDropdownItem(id: 'id2', text: 'Action 2'),
-    const ButtonDropdownGroup(
-      id: 'group1',
-      text: 'Group heading',
-      items: [
-        ButtonDropdownItem(id: 'id3', text: 'Action 3'),
-        ButtonDropdownItem(
-          id: 'id4',
-          text: 'Action 4',
-          disabled: true,
-          disabledReason: 'Reason for disabling',
-        ),
-      ],
+    const ButtonDropdownItem(id: 'delete', text: 'Delete'),
+    const ButtonDropdownItem(id: 'move', text: 'Move'),
+    const ButtonDropdownItem(
+      id: 'rename',
+      text: 'Rename',
+      disabled: true,
+      disabledReason: 'No permission to rename',
     ),
-    const ButtonDropdownItem(id: 'id5', text: 'Action 5', external: true),
+    const ButtonDropdownItem(
+      id: 'view_metrics',
+      text: 'View metrics',
+      external: true,
+    ),
   ];
 
   // Button Configurator State
@@ -538,7 +528,7 @@ class _UiKitExampleState extends State<UiKitExample> {
                       runSpacing: spacing.scaledS,
                       children: [
                         CloudscapeButtonDropdown(
-                          text: 'Default dropdown',
+                          text: 'Short',
                           items: _bddItems,
                           disabled: _bddDisabled,
                           loading: _bddLoading,
@@ -778,7 +768,7 @@ class _ShowcaseItem extends StatelessWidget {
           Text(
             label,
             style: context.cloudscapeTypography.bodyS.copyWith(
-              color: context.cloudscapeColors.tokens.colorTextBodySecondary,
+              color: context.cloudscapeColors.text.bodySecondary,
             ),
           ),
           SizedBox(height: context.cloudscapeSpacing.scaledXxs),
