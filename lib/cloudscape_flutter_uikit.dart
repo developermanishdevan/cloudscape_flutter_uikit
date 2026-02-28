@@ -17,6 +17,6 @@ export 'src/foundation/accessibility/accessibility_utils.dart';
 
 // Components
 export 'src/components/base/component_base.dart';
-export 'src/components/card/cloudscape_card.dart';
+export 'src/components/box/cloudscape_box.dart';
 export 'src/components/alert/cloudscape_alert.dart';
 export 'src/components/anchor_navigation/cloudscape_anchor_navigation.dart';

@@ -6,7 +6,7 @@ import '../base/component_base.dart';
 ///
 /// Follows the design pattern of having a specialized header/visual area
 /// and a content area below it, separated by a thin divider.
-class CloudscapeCard extends StatelessWidget {
+class CloudscapeBox extends StatelessWidget {
   /// The widget to display in the top section of the card.
   /// Usually contains a visual representation or preview of a component.
   final Widget? header;
@@ -26,7 +26,7 @@ class CloudscapeCard extends StatelessWidget {
   /// Border radius for the card.
   final BorderRadius? borderRadius;
 
-  const CloudscapeCard({
+  const CloudscapeBox({
     super.key,
     this.header,
     required this.body,

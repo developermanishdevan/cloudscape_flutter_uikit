@@ -139,7 +139,7 @@ class _UiKitExampleState extends State<UiKitExample> {
             // Alert Component Card
             SizedBox(
               width: 600,
-              child: CloudscapeCard(
+              child: CloudscapeBox(
                 header: Container(
                   height: 50,
                   alignment: Alignment.centerLeft,
@@ -312,7 +312,7 @@ class _UiKitExampleState extends State<UiKitExample> {
               child: Column(
                 children: [
                   // Variant 1: Default
-                  CloudscapeCard(
+                  CloudscapeBox(
                     header: Container(
                       height: 50,
                       alignment: Alignment.centerLeft,
@@ -348,7 +348,7 @@ class _UiKitExampleState extends State<UiKitExample> {
                   SizedBox(height: spacing.scaledM),
 
                   // Variant 2: With heading
-                  CloudscapeCard(
+                  CloudscapeBox(
                     header: Container(
                       height: 50,
                       alignment: Alignment.centerLeft,
@@ -384,7 +384,7 @@ class _UiKitExampleState extends State<UiKitExample> {
                   SizedBox(height: spacing.scaledM),
 
                   // Variant 3: With nested anchors & Status Labels
-                  CloudscapeCard(
+                  CloudscapeBox(
                     header: Container(
                       height: 50,
                       alignment: Alignment.centerLeft,
@@ -454,7 +454,7 @@ class _UiKitExampleState extends State<UiKitExample> {
             // Typography Section
             SizedBox(
               width: 500,
-              child: CloudscapeCard(
+              child: CloudscapeBox(
                 header: Container(
                   height: 50,
                   alignment: Alignment.centerLeft,
