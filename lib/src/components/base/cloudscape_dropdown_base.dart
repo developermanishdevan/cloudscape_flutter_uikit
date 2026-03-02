@@ -78,6 +78,20 @@ class CloudscapeDropdownBaseState extends State<CloudscapeDropdownBase> {
     widget.onClosed?.call();
   }
 
+  @override
+  void didUpdateWidget(CloudscapeDropdownBase oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_isOpened) {
+      // Rebuild the overlay when the widget's properties change
+      // so the dropdown content (e.g., multiselect selection) updates immediately.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _overlayEntry?.markNeedsBuild();
+        }
+      });
+    }
+  }
+
   OverlayEntry _createOverlayEntry() {
     RenderBox renderBox = context.findRenderObject() as RenderBox;
     Size size = renderBox.size;

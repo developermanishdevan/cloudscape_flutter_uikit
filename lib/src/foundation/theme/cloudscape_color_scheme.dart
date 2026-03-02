@@ -263,7 +263,7 @@ class CloudscapeTextColors with Diagnosticable {
       label = CloudscapePalette.grey350,
       linkDefault = primary ?? CloudscapePalette.blue400,
       linkHover = linkHover ?? primary ?? CloudscapePalette.blue300,
-      onPrimary = CloudscapePalette.white,
+      onPrimary = CloudscapePalette.black,
       onStatusError = CloudscapePalette.white,
       onStatusSuccess = CloudscapePalette.white,
       onStatusInfo = CloudscapePalette.white,

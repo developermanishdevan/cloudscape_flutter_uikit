@@ -56,5 +56,7 @@ class CloudscapePalette {
 
   static const Color orange600 = Color(0xFF855900);
 
+  static const Color transparent = Color(0x00000000);
+
   // Add more as needed...
 }
